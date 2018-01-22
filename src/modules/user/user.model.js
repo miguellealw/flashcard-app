@@ -28,12 +28,12 @@ const UserSchema = new Schema({
     //required: [true, "Please Provide a Password"],
     trim: true,
   },
-  decks: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Deck",
-    },
-  ],
+  // decks: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     ref: "Deck",
+  //   },
+  // ],
 });
 
 UserSchema.plugin(passportLocalMongoose, { usernameField: "email" });

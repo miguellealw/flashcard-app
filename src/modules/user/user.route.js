@@ -9,7 +9,7 @@ const userController = require("./user.controller");
 const routes = new Router();
 
 routes.post("/signup", userController.signUp);
-routes.post("/login", userController.logIn);
-routes.get("/logout", userController.logout)
+routes.post("/login", passport.authenticate("local"), userController.logIn);
+routes.get("/logout", userController.logout);
 
 module.exports = routes;

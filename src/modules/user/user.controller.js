@@ -17,12 +17,17 @@ async function signUp(req, res, next) {
   }
 }
 
-const logIn = passport.authenticate("local", {
-  failureRedirect: "/login",
-  //failureFlash: "Failed Login",
-  successRedirect: "/",
-  //successFlash: "You are now logged in",
-});
+// use this when frontend is ready
+// const logIn = passport.authenticate("local", {
+//   failureRedirect: "/login",
+//   //failureFlash: "Failed Login",
+//   successRedirect: "/",
+//   //successFlash: "You are now logged in",
+// });
+
+const logIn = function(req, res) {
+  res.json(req.user)
+}
 
 function logout(req, res) {
   req.logout();
