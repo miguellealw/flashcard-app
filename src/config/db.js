@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const DB_URL = require("./constants").DB_URL;
+const DB_URL = require("./keys").DB_URL;
 
 try {
   /* Mongoose Connection */

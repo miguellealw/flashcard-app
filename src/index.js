@@ -1,16 +1,19 @@
 const express = require("express");
-const constants = require("./config/constants");
+const keys = require("./config/keys");
 require("./config/db");
-const middleware = require('./config/middleware')
+
+const middleware = require("./config/middleware");
+const apiRoutes = require("./modules");
 
 const app = express();
 
-middleware(app)
+middleware(app);
+apiRoutes(app);
 
-app.listen(constants.PORT, () => {
+app.listen(keys.PORT, () => {
   console.log(`
-    Server Running on Port ${constants.PORT}
+    Server Running on Port ${keys.PORT}
     ----
-    https://localhost:${constants.PORT}
+    http://localhost:${keys.PORT}
   `);
 });
