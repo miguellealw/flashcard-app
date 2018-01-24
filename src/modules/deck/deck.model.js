@@ -30,6 +30,12 @@ DeckSchema.pre("save", function(next) {
   next();
 });
 
+// DeckSchema.pre("findOneAndUpdate", function(next) {
+//   // this.update({}, {$set: {slug: }})
+//   console.log(this.schema)
+//   next();
+// });
+
 const Deck = mongoose.model("Deck", DeckSchema);
 
 module.exports = Deck;

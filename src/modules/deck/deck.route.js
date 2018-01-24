@@ -26,8 +26,8 @@ routes
 routes
   .route("/:slug")
   .get(deckController.getDeck)
+  .patch(deckController.updateDeckBySlug);
 
 routes.delete("/:id", deckController.removeDeckById);
-
 
 module.exports = routes;
