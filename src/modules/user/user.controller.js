@@ -11,6 +11,7 @@ async function signUp(req, res, next) {
     });
     const register = promisify(User.register, User);
     await register(user, req.body.password);
+    // TODO change what is returned after signup
     res.status(201).json(user);
   } catch (error) {
     next(error);

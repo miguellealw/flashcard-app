@@ -19,9 +19,9 @@ async function getAllDecks(req, res, next) {
   }
 }
 
-async function getDeckById(req, res, next) {
+async function getDeck(req, res, next) {
   try {
-    const deck = await Deck.findById(req.params.id);
+    const deck = await Deck.findOne({ slug: req.params.slug });
     res.json(deck);
   } catch (error) {
     next(error);
@@ -51,6 +51,6 @@ module.exports = {
   getAllUserDecks,
   getAllDecks,
   createDeck,
-  getDeckById,
+  getDeck,
   removeDeckById,
 };

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const CardSchema = require("../card/card.schema");
+const CardSchema = require("../card/card.model");
+
 const slugify = require("slugify");
 
 const DeckSchema = new Schema(
@@ -17,8 +18,8 @@ const DeckSchema = new Schema(
     cards: [CardSchema],
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User"
-    }
+      ref: "User",
+    },
   },
   { timestamps: true },
 );

@@ -4,6 +4,8 @@ const passportLocalMongoose = require("passport-local-mongoose");
 
 const keys = require("../../config/keys");
 
+// const uniqueValidator = require("mongoose-unique-validator");
+
 const bcrypt = require("bcryptjs");
 const genSalt = bcrypt.genSalt;
 const hash = bcrypt.hash;
@@ -28,15 +30,18 @@ const UserSchema = new Schema({
     //required: [true, "Please Provide a Password"],
     trim: true,
   },
-  // decks: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "Deck",
-  //   },
-  // ],
+  decks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Deck",
+    },
+  ],
 });
 
 UserSchema.plugin(passportLocalMongoose, { usernameField: "email" });
+// UserSchema.plugin(uniqueValidator, {
+//   message: "{VALUE} is already taken",
+// });
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
