@@ -5,18 +5,12 @@ const routes = express.Router();
 const deckController = require("./deck.controller");
 // const cardController = require("../card/card.controller");
 
+const isLoggedIn = require("../authController").isLoggedIn;
+
 const cardRoutes = require("../card/card.route");
 
 // Handle card routes
 routes.use("/", cardRoutes);
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.status(401).send("not authenticated");
-  // TODO redirect to login page on client
-}
 
 routes
   .route("/")
@@ -26,8 +20,8 @@ routes
 routes
   .route("/:slug")
   .get(deckController.getDeck)
-  .patch(deckController.updateDeckBySlug);
+  .patch(isLoggedIn, deckController.updateDeckBySlug);
 
-routes.delete("/:id", deckController.removeDeckById);
+routes.delete("/:id", isLoggedIn, deckController.deleteDeckById);
 
 module.exports = routes;

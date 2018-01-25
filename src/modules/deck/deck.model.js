@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const CardSchema = require("../card/card.model");
+const mongooseUniqueValidator = require("mongoose-unique-validator");
 
 const slugify = require("slugify");
 
@@ -28,6 +29,10 @@ DeckSchema.pre("save", function(next) {
   if (!this.isModified("name")) return next();
   this.slug = slugify(this.name);
   next();
+});
+
+DeckSchema.plugin(mongooseUniqueValidator, {
+  message: "'{VALUE}' is already taken",
 });
 
 // DeckSchema.pre("findOneAndUpdate", function(next) {

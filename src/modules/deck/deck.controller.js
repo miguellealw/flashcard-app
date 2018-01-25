@@ -57,7 +57,7 @@ async function updateDeckBySlug(req, res, next) {
   }
 }
 
-async function removeDeckById(req, res, next) {
+async function deleteDeckById(req, res, next) {
   try {
     const removedDeck = await Deck.findByIdAndRemove(req.params.id);
     res.status(200).json(removedDeck);
@@ -71,6 +71,6 @@ module.exports = {
   getAllDecks,
   createDeck,
   getDeck,
-  removeDeckById,
+  deleteDeckById,
   updateDeckBySlug,
 };

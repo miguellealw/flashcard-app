@@ -47,15 +47,15 @@ async function getCardById(req, res, next) {
 async function updateCardById(req, res, next) {
   try {
     // object that will hold the fields getting updated
-    const updatedOpts = {}
+    const updateOpts = {}
     for(const key in req.body) {
       const val = req.body[key]
-      updatedOpts[`cards.$.${key}`] = val
+      updateOpts[`cards.$.${key}`] = val;
     }
 
     const updatedDeck = await Deck.findOneAndUpdate(
       { slug: req.params.slug, "cards._id": req.params.cardId },
-      { $set: updatedOpts },
+      { $set: updateOpts },
       { new: true },
     ).exec();
     const updatedCard = updatedDeck.cards.find(card => card.id === req.params.cardId);
