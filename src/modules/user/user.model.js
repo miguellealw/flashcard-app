@@ -4,7 +4,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 
 const keys = require("../../config/keys");
 
-// const uniqueValidator = require("mongoose-unique-validator");
+const uniqueValidator = require("mongoose-unique-validator");
 
 const bcrypt = require("bcryptjs");
 const genSalt = bcrypt.genSalt;
@@ -39,9 +39,10 @@ const UserSchema = new Schema({
 });
 
 UserSchema.plugin(passportLocalMongoose, { usernameField: "email" });
-// UserSchema.plugin(uniqueValidator, {
-//   message: "{VALUE} is already taken",
-// });
+UserSchema.plugin(uniqueValidator, {
+  message: "{VALUE} is already taken",
+});
+
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
