@@ -11,13 +11,23 @@ async function signUp(req, res, next) {
     });
     const register = promisify(User.register, User);
     await register(user, req.body.password);
-    // TODO change what is returned after signup
-    res.status(201).json(user);
+
+    // Pick properties from the user object to avoid sending
+    // sensitive data to client
+    const sanitizedUser = (({ _id, email, username, decks }) => ({
+      _id,
+      email,
+      username,
+      decks,
+    }))(user);
+
+    res.status(201).json(sanitizedUser);
   } catch (error) {
     next(error);
   }
 }
 
+// TODO uncomment when client is usable
 // use this when frontend is ready
 // const logIn = passport.authenticate("local", {
 //   failureRedirect: "/login",
@@ -27,16 +37,17 @@ async function signUp(req, res, next) {
 // });
 
 const logIn = function(req, res) {
-  res.json(req.user)
-}
+  res.json(req.user);
+};
 
 function logout(req, res) {
   req.logout();
-  res.redirect("/");
+  // res.redirect("/");
+  res.send("logged out");
 }
 
 module.exports = {
   signUp,
   logIn,
-  logout
+  logout,
 };
