@@ -19,7 +19,7 @@ routes
 
 routes
   .route("/:slug")
-  .get(deckController.getDeck)
+  .get(deckController.getDeckBySlug)
   .patch(isLoggedIn, deckController.updateDeckBySlug);
 
 routes.delete("/:id", isLoggedIn, deckController.deleteDeckById);

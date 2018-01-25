@@ -24,7 +24,7 @@ async function getAllDecks(req, res, next) {
   }
 }
 
-async function getDeck(req, res, next) {
+async function getDeckBySlug(req, res, next) {
   try {
     const deck = await Deck.findOne({ slug: req.params.slug });
     if (deck) return res.json(deck);
@@ -70,7 +70,7 @@ module.exports = {
   getAllUserDecks,
   getAllDecks,
   createDeck,
-  getDeck,
+  getDeckBySlug,
   deleteDeckById,
   updateDeckBySlug,
 };
