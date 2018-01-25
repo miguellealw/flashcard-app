@@ -16,13 +16,11 @@ async function getAllCards(req, res) {
 async function createCard(req, res, next) {
   try {
     const deck = await Deck.findOne({ slug: req.params.slug });
-    const card = deck.cards.push({
-      front: req.body.front,
-      back: req.body.back,
-    });
+    const newCards = req.body;
+    // spread new cards in the cards subdocument
+    deck.cards = [...deck.cards, ...newCards]
     await deck.save();
-    const createdCard = deck.cards[deck.cards.length - 1];
-    return res.status(201).json(createdCard);
+    return res.status(201).json(deck.cards);
   } catch (error) {
     next(error);
   }
@@ -47,9 +45,9 @@ async function getCardById(req, res, next) {
 async function updateCardById(req, res, next) {
   try {
     // object that will hold the fields getting updated
-    const updateOpts = {}
-    for(const key in req.body) {
-      const val = req.body[key]
+    const updateOpts = {};
+    for (const key in req.body) {
+      const val = req.body[key];
       updateOpts[`cards.$.${key}`] = val;
     }
 
@@ -58,7 +56,9 @@ async function updateCardById(req, res, next) {
       { $set: updateOpts },
       { new: true },
     ).exec();
-    const updatedCard = updatedDeck.cards.find(card => card.id === req.params.cardId);
+    const updatedCard = updatedDeck.cards.find(
+      card => card.id === req.params.cardId,
+    );
     res.json(updatedCard);
   } catch (error) {
     next(error);
