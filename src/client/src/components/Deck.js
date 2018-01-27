@@ -6,15 +6,13 @@ const DeckInfo = styled.div`
   bottom: 0px;
   left: 0;
   right: 0;
-  
-  background: #d9d9d9;
+
+  background: #eee;
   border-bottom-right-radius: 3%;
   border-bottom-left-radius: 3%;
   padding: 1.5rem 1rem;
-  box-shadow: 0 .5rem 5px rgba(0,0,0,1)
-  
-  & h3 {
-    margin-bottom: .2rem;
+  box-shadow: 0 0.5rem 5px rgba(0, 0, 0, 1) & h3 {
+    margin-bottom: 0.2rem;
   }
 
   & p {
@@ -44,11 +42,12 @@ const DeckStyle = styled.div`
   justify-content: flex-end;
   margin-bottom: 5rem;
   border-radius: 3%;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease-in-out;
   cursor: pointer;
+  box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.2);
 
   &:hover {
-    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);
     transform: translateY(-5px);
   }
 `;
@@ -57,7 +56,7 @@ const Deck = ({ name, cardAmount, imgUrl, match }) => {
   return (
     <DeckStyle>
       <DeckImg>
-        <img src={imgUrl} alt="Deck Img"/>
+        <img src={imgUrl} alt="Deck Img" />
       </DeckImg>
       <DeckInfo>
         <h3>{name}</h3>
@@ -69,4 +68,3 @@ const Deck = ({ name, cardAmount, imgUrl, match }) => {
 };
 
 export default Deck;
-    

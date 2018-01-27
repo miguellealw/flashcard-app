@@ -16,6 +16,10 @@ injectGlobal`
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
   }
+
+  body {
+    // background: #eee;
+  }
 `;
 
 const Container = styled.div`
