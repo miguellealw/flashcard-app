@@ -25,7 +25,6 @@ const DeckImg = styled.div`
   height: 100%;
   border-radius: 3%;
   overflow: hidden;
-
   & img {
     width: 100%;
     height: 100%;
