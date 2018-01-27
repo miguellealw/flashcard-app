@@ -5,7 +5,7 @@ const CardStyle = styled.div`
   width: 400px;
   height: 250px;
   background: gray;
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
 `;
 
 const Card = () => {
