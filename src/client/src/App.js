@@ -7,6 +7,8 @@ import Nav from "./components/Nav";
 import DeckList from "./components/DeckList";
 import CardList from "./components/CardList";
 import Home from "./components/Home";
+import Login from "./components/Login";
+import Signup from './components/Signup'
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
@@ -35,8 +37,10 @@ class App extends Component {
         <Nav />
         <Container>
           <Route exact path="/" component={Home} />
-          <Route exact path="/deck" component={DeckList} />
-          <Route exact path="/deck/:deckName" component={CardList} />
+          <Route exact path="/decks" component={DeckList} />
+          <Route exact path="/decks/:deckName" component={CardList} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
         </Container>
       </div>
     );
