@@ -31,7 +31,7 @@ const AttentionGetter = styled.p`
   color: #ccc;
 `;
 
-const CallToAction = styled.button`
+const SignUpButton = styled.button`
   border: 3px solid black;
   padding: 1rem 2rem;
   cursor: pointer;
@@ -72,7 +72,7 @@ export default class extends Component {
         </AttentionGetter>
 
         <Link to="/signup">
-          <CallToAction>Sign Up Now</CallToAction>
+          <SignUpButton>Sign Up Now</SignUpButton>
         </Link>
 
         <LoginOption>
