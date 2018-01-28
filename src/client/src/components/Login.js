@@ -101,31 +101,27 @@ const LoginForm = () => (
         <Form>
           <label>
             Email:
-            <Field
-              type="email"
-              name="email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-            />{" "}
+            <Field type="email" name="email" placeholder="jon@gmail.com" />{" "}
           </label>{" "}
-          {touched.email && errors.email && <ErrorMessage> {errors.email} </ErrorMessage>}{" "}
+          {touched.email &&
+            errors.email && <ErrorMessage> {errors.email} </ErrorMessage>}{" "}
           <label>
             Password:
-            <input
-              name="password"
-              type="password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            />{" "}
+            <Field name="password" type="password" placeholder="password123"/>{" "}
           </label>{" "}
-            {touched.password &&
-              errors.password && <ErrorMessage> {errors.password} </ErrorMessage>}{" "}
-          <label className="checkbox-label">
-            <input type="checkbox" name="remember" />
+          {touched.password &&
+            errors.password && (
+              <ErrorMessage> {errors.password} </ErrorMessage>
+            )}{" "}
+          {/* <label className="checkbox-label">
+            <Field
+              name="rememberUser"
+              component={({ field }) => (
+                <input type="checkbox" name="remember" />
+              )}
+            />
             Remember Me{" "}
-          </label>{" "}
+          </label>{" "} */}
           <button type="submit" disabled={isSubmitting}>
             Log In{" "}
           </button>{" "}
