@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "../actions";
 
 const Navigation = styled.nav`
   display: flex;
@@ -33,7 +35,28 @@ const Navigation = styled.nav`
 //   padding-left: 3rem;
 // `;
 
-export default class Nav extends Component {
+class Nav extends Component {
+  renderNav = () => {
+    if (!this.props.auth.isAuthenticated) {
+      return [
+        <Link key="1" to="/login">
+          <li>Log In</li>
+        </Link>,
+        <Link key="2" to="/signup">
+          <li>Sign Up</li>
+        </Link>,
+      ];
+    }
+    return [
+      <Link to="/decks" key="1">
+        <li>Your Decks</li>
+      </Link>,
+      <Link to="/" key="2" onClick={this.props.logoutUser}>
+        <li>Log Out</li>
+      </Link>,
+    ];
+  };
+
   render() {
     return (
       <Navigation>
@@ -41,18 +64,17 @@ export default class Nav extends Component {
           <Link to="/">
             <li>Home</li>
           </Link>
-          <Link to="/decks">
-            <li>Decks</li>
-          </Link>
-
-          <Link to="/login">
-            <li>Log In</li>
-          </Link>
-          <Link to="/signup">
-            <li>Sign Up</li>
-          </Link>
+          {!this.props.auth ? <div>Loading...</div> : this.renderNav()}
         </ul>
       </Navigation>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(mapStateToProps, actions)(Nav);

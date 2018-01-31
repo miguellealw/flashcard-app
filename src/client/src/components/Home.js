@@ -76,7 +76,7 @@ export default class extends Component {
         </Link>
 
         <LoginOption>
-          or <Link to="/login">Login</Link>
+          or <Link to="/login">Login</Link> to Get Started
         </LoginOption>
       </LandingPage>
     );

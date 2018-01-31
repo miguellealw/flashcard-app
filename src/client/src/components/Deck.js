@@ -7,11 +7,12 @@ const DeckInfo = styled.div`
   left: 0;
   right: 0;
 
-  background: #eee;
+  background: #fff;
   border-bottom-right-radius: 3%;
   border-bottom-left-radius: 3%;
-  padding: 1.5rem 1rem;
-  box-shadow: 0 0.5rem 5px rgba(0, 0, 0, 1) & h3 {
+  padding: 1rem 1rem;
+  // box-shadow: 0 -1rem 10px rgba(0, 0, 0, .3);
+  & h3 {
     margin-bottom: 0.2rem;
   }
 
@@ -43,7 +44,7 @@ const DeckStyle = styled.div`
   border-radius: 3%;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.2);
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
 
   &:hover {
     box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);

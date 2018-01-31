@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Formik, Form, Field } from "formik";
 import styled from "styled-components";
 import Yup from "yup";
+import { connect } from "react-redux";
+import * as actions from "../actions";
 
 const FormContainer = styled.div`
   display: flex;
@@ -38,7 +40,7 @@ const FormContainer = styled.div`
     }
 
     label {
-      margin: 1.5rem 0;
+      margin: 1rem 0;
     }
 
     button {
@@ -66,15 +68,24 @@ const ErrorMessage = styled.div`
   color: #e81b0c;
 `;
 
-const LoginForm = () => (
+const LoginForm = ({ handleLogin, logInUser }) => (
   <Formik
     initialValues={{
       email: "",
       password: "",
     }}
-    onSubmit={(values, { setSubmitting }) => {
-      console.log(values);
-      setSubmitting(false);
+    onSubmit={async (values, { setSubmitting }) => {
+      // Log User In
+      try {
+        logInUser({
+          email: values.email,
+          password: values.password,
+        });
+        setSubmitting(false);
+      } catch (error) {
+        console.log(error);
+        setSubmitting(false);
+      }
     }}
     validate={values => {
       let errors = {};
@@ -107,7 +118,11 @@ const LoginForm = () => (
             errors.email && <ErrorMessage> {errors.email} </ErrorMessage>}{" "}
           <label>
             Password:
-            <Field name="password" type="password" placeholder="password123"/>{" "}
+            <Field
+              name="password"
+              type="password"
+              placeholder="password123"
+            />{" "}
           </label>{" "}
           {touched.password &&
             errors.password && (
@@ -122,6 +137,7 @@ const LoginForm = () => (
             />
             Remember Me{" "}
           </label>{" "} */}
+          {/* TODO: style disabled button */}
           <button type="submit" disabled={isSubmitting}>
             Log In{" "}
           </button>{" "}
@@ -131,12 +147,20 @@ const LoginForm = () => (
   />
 );
 
-export default class Login extends Component {
+class Login extends Component {
   render() {
     return (
       <div>
-        <LoginForm />
+        <LoginForm {...this.props} />
       </div>
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps, actions)(Login);
