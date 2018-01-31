@@ -42,12 +42,20 @@ const logIn = function(req, res) {
 
 function logout(req, res) {
   req.logout();
-  // res.redirect("/");
-  res.send("logged out");
+  // res.json({ success: true });
+  res.redirect("/");
+}
+
+function currentUser(req, res) {
+  if (req.user) {
+    return res.json({ userData: req.user });
+  }
+  return res.json({ userData: null });
 }
 
 module.exports = {
   signUp,
   logIn,
   logout,
+  currentUser,
 };
