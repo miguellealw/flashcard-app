@@ -37,7 +37,15 @@ async function signUp(req, res, next) {
 // });
 
 const logIn = function(req, res) {
-  res.json(req.user);
+  const userObj = (({ email, decks, username }) => ({
+    email,
+    decks,
+    username,
+  }))(req.user);
+  if (req.user) {
+    return res.json(userObj);
+  }
+  // return res.status(401).send(null);
 };
 
 function logout(req, res) {
@@ -47,10 +55,15 @@ function logout(req, res) {
 }
 
 function currentUser(req, res) {
+  const userObj = (({ email, decks, username }) => ({
+    email,
+    decks,
+    username,
+  }))(req.user);
   if (req.user) {
-    return res.json({ userData: req.user });
+    return res.json(userObj);
   }
-  return res.json({ userData: null });
+  return res.status(401).json(null);
 }
 
 module.exports = {
