@@ -34,6 +34,23 @@ const Container = styled.div`
   // background: #ccc;
 `;
 
+const PrivateRoute = ({ component: Component, auth, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => {
+      // render only when user is fetched
+      if (!auth.isFetching) {
+        return auth.loggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/login" />
+        );
+      }
+      return <div>Loading...</div>
+    }}
+  />
+);
+
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
@@ -46,34 +63,30 @@ class App extends Component {
           <Nav handleLogout={this.handleLogout} />
           <Container>
             <Route exact path="/" component={Home} />
-            <Route
+            {/* <Route
               exact
               path="/decks"
-              render={
-                !this.props.auth
-                  ? () => <div>loading</div>
-                  : (props) =>
-                      !this.props.auth.isAuthenticated ? (
-                        <Redirect to="/" />
-                      ) : (
-                        <DeckList {...props}/>
-                      )
+              render={props =>
+                !this.props.auth.loggedIn ? (
+                  <Redirect to="/" />
+                ) : (
+                  <DeckList {...props} />
+                )
               }
+            /> */}
+            <PrivateRoute
+              exact
+              path="/decks"
+              auth={this.props.auth}
+              component={DeckList}
             />
             <Route exact path="/decks/:deckName" component={CardList} />
             <Route
               exact
               path="/login"
-              render={
-                !this.props.auth
-                  ? () => <div>loading</div>
-                  : () =>
-                      !this.props.auth.isAuthenticated ? (
-                        <Login handleLogin={this.handleLogin} />
-                      ) : (
-                        <Redirect to="/" />
-                      )
-              }
+              render={props => (
+                <Login history={props.history} handleLogin={this.handleLogin} />
+              )}
             />
             <Route exact path="/signup" component={Signup} />
           </Container>
