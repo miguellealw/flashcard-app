@@ -68,7 +68,7 @@ const ErrorMessage = styled.div`
   color: #e81b0c;
 `;
 
-const LoginForm = ({ handleLogin, logInUser }) => (
+const LoginForm = ({ logInUser, history }) => (
   <Formik
     initialValues={{
       email: "",
@@ -77,10 +77,7 @@ const LoginForm = ({ handleLogin, logInUser }) => (
     onSubmit={async (values, { setSubmitting }) => {
       // Log User In
       try {
-        logInUser({
-          email: values.email,
-          password: values.password,
-        });
+        logInUser({ email: values.email, password: values.password }, history);
         setSubmitting(false);
       } catch (error) {
         console.log(error);
@@ -159,8 +156,8 @@ class Login extends Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth
-  }
+    auth: state.auth,
+  };
 }
 
 export default connect(mapStateToProps, actions)(Login);

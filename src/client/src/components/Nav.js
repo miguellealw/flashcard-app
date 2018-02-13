@@ -37,7 +37,7 @@ const Navigation = styled.nav`
 
 class Nav extends Component {
   renderNav = () => {
-    if (!this.props.auth.isAuthenticated) {
+    if (!this.props.auth.loggedIn) {
       return [
         <Link key="1" to="/login">
           <li>Log In</li>
@@ -60,12 +60,17 @@ class Nav extends Component {
   render() {
     return (
       <Navigation>
-        <ul>
-          <Link to="/">
-            <li>Home</li>
-          </Link>
-          {!this.props.auth ? <div>Loading...</div> : this.renderNav()}
-        </ul>
+        {!this.props.auth.isFetching ? (
+          <ul>
+            <Link to="/">
+              <li>Home</li>
+            </Link>
+            {this.renderNav()}
+            {/* {!this.props.auth ? <div>Loading...</div> : this.renderNav()} */}
+          </ul>
+        ) : (
+          <div />
+        )}
       </Navigation>
     );
   }
