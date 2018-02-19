@@ -3,12 +3,13 @@ import { Route, Redirect } from "react-router-dom";
 import styled, { injectGlobal } from "styled-components";
 import { connect } from "react-redux";
 import * as actions from "./actions";
+import Spinner from "react-spinkit";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
 /* Components */
 import Nav from "./components/Nav";
-import DeckList from "./components/DeckList";
+import DeckPage from "./containers/DeckPage";
 import CardList from "./components/CardList";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -16,6 +17,7 @@ import Signup from "./components/Signup";
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
   * {
     padding: 0;
     margin: 0;
@@ -34,19 +36,29 @@ const Container = styled.div`
   // background: #ccc;
 `;
 
-const PrivateRoute = ({ component: Component, auth, ...rest }) => (
+const Loading = styled.div`
+  width: ;
+`;
+
+const PrivateRoute = ({
+  component: Component,
+  auth,
+  redirectUrl,
+  isLoggedIn,
+  ...rest
+}) => (
   <Route
     {...rest}
     render={props => {
       // render only when user is fetched
-      if (!auth.isFetching) {
-        return auth.loggedIn ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        );
-      }
-      return <div>Loading...</div>
+
+      if (auth.isFetching) return <Spinner name="circle" color="#ccc" />;
+
+      return auth.loggedIn === isLoggedIn ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to={redirectUrl} />
+      );
     }}
   />
 );
@@ -62,33 +74,46 @@ class App extends Component {
         <div>
           <Nav handleLogout={this.handleLogout} />
           <Container>
-            <Route exact path="/" component={Home} />
-            {/* <Route
+            <PrivateRoute
               exact
-              path="/decks"
-              render={props =>
-                !this.props.auth.loggedIn ? (
-                  <Redirect to="/" />
-                ) : (
-                  <DeckList {...props} />
-                )
-              }
-            /> */}
+              path="/"
+              auth={this.props.auth}
+              isLoggedIn={false}
+              redirectUrl={"/decks"}
+              component={Home}
+            />
             <PrivateRoute
               exact
               path="/decks"
               auth={this.props.auth}
-              component={DeckList}
+              isLoggedIn={true}
+              redirectUrl={"/login"}
+              component={DeckPage}
             />
-            <Route exact path="/decks/:deckName" component={CardList} />
-            <Route
+            <PrivateRoute
               exact
+              path="/decks/:deckName"
+              auth={this.props.auth}
+              isLoggedIn={true}
+              redirectUrl={"/login"}
+              component={CardList}
+            />
+            <PrivateRoute
               path="/login"
-              render={props => (
+              auth={this.props.auth}
+              isLoggedIn={false}
+              redirectUrl={"/decks"}
+              component={props => (
                 <Login history={props.history} handleLogin={this.handleLogin} />
               )}
             />
-            <Route exact path="/signup" component={Signup} />
+            <PrivateRoute
+              path="/signup"
+              auth={this.props.auth}
+              isLoggedIn={false}
+              redirectUrl={"/decks"}
+              component={Signup}
+            />
           </Container>
         </div>
       </Router>
