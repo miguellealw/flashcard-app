@@ -2,7 +2,8 @@ import React from "react";
 import Modal from "react-modal";
 import MdClose from "react-icons/lib/md/close";
 import MdAddCircle from "react-icons/lib/md/add-circle";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import { fadeIn } from "./animations/index";
 
 const CloseButton = styled.button`
   background: none;
@@ -103,6 +104,14 @@ const BackSideInput = styled.textarea`
   }
 `;
 
+const ErrorMessage = styled.span`
+  color: white;
+  background: #dc3545;
+  border-radius: 0.2rem;
+  padding: 0.5rem 1.5rem;
+  animation: ${fadeIn} 0.3s ease-in-out;
+`;
+
 const ModalStyles = {
   overlay: {
     backgroundColor: "rgba(0,0,0,.8)",
@@ -151,6 +160,7 @@ const NewCardModal = ({
   handleChange,
   handleCreateCard,
   card,
+  errors,
 }) => (
   <Modal
     isOpen={showModal}
@@ -159,14 +169,16 @@ const NewCardModal = ({
     appElement={document.getElementById("root")}
   >
     <Title>New Cards</Title>
-
+    {errors.errorMessage && <ErrorMessage>{errors.errorMessage}</ErrorMessage>}
     <NewCardInputs handleChange={handleChange} />
 
     <CloseButton onClick={handleCloseModal}>
       <MdClose />
     </CloseButton>
 
-    <AddButton onClick={async () => await handleCreateCard(card.front, card.back)}>
+    <AddButton
+      onClick={async () => await handleCreateCard(card.front, card.back)}
+    >
       <MdAddCircle />
     </AddButton>
   </Modal>

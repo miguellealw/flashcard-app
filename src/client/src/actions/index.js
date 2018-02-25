@@ -124,15 +124,25 @@ export const createDeck = deckName => async dispatch => {
 };
 
 /* Card Actions */
-export const createCard = (deckSlug, front, back) => async dispatch => {
-  console.log('this is the create card action')
+export const createCard = (deckSlug, front, back) => async (
+  dispatch,
+  getState,
+) => {
   dispatch(request());
-
+  // console.log('state errros', !!stateErrors)
   try {
     const newCard = await cardServices.createCard(deckSlug, front, back);
+    let stateErrors = getState().errors.errorMessage;
+    // if (stateErrors) {
+    //   stateErrors = null;
+    // }
+    if (!!stateErrors) {
+      dispatch(clearErrors());
+    }
     dispatch(success(newCard, deckSlug));
   } catch (error) {
-    dispatch(failure(error));
+    const errorMessage = error.response.data.error;
+    dispatch(failure(errorMessage));
   }
 
   function request() {
@@ -145,3 +155,7 @@ export const createCard = (deckSlug, front, back) => async dispatch => {
     return { type: "CREATE_CARD_FAILURE", error };
   }
 };
+
+export function clearErrors() {
+  return { type: "CLEAR_ERRORS" };
+}

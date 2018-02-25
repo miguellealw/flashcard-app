@@ -1,6 +1,7 @@
 /* Component */
 import React from "react";
 import styled from "styled-components";
+import { slideFromBottom } from "./animations/index";
 
 // const CardStyle = styled.div`
 //   width: 400px;
@@ -22,18 +23,19 @@ const CardContainer = styled.div`
   cursor: pointer;
   filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.2));
   perspective: 850px;
-  &:hover {
-    filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.2));
+  animation: ${slideFromBottom} 0.3s ease-in-out;
+  // &:hover {
+  //   filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.2));
 
-    // Front Side
-    & span {
-      transform: rotateY(-180deg);
-    }
-    // Back Side
-    & div {
-      transform: rotateY(0deg);
-    }
-  }
+  //   // Front Side
+  //   & span {
+  //     transform: rotateY(-180deg);
+  //   }
+  //   // Back Side
+  //   & div {
+  //     transform: rotateY(0deg);
+  //   }
+  // }
 `;
 
 const CardFront = styled.span`

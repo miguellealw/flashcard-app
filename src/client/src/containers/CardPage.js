@@ -12,9 +12,10 @@ class CardPage extends Component {
       back: "",
     },
     showModal: false,
-    currentDeck: () => this.props.decks.find(
-      deck => deck.slug === this.props.match.params.deckName,
-    ),
+    currentDeck: () =>
+      this.props.decks.find(
+        deck => deck.slug === this.props.match.params.deckName,
+      ),
     deckSlug: this.props.match.params.deckName,
   };
 
@@ -23,13 +24,21 @@ class CardPage extends Component {
   };
 
   handleCloseModal = () => {
+    this.props.clearErrors();
     this.setState({ showModal: false });
   };
 
-  handleCreateCard = (front, back) => {
+  handleCreateCard = async (front, back) => {
+    // if(this.props.errors) return
     const slug = this.props.match.params.deckName;
-    this.props.createCard(slug, front, back);
-    this.handleCloseModal();
+    // await create card to get errors stored, if any
+    await this.props.createCard(slug, front, back);
+
+    // close modal and clear inputs if no errors
+    if (!this.props.errors.errorMessage) {
+      this.setState({ ...this.state, card: { front: "", back: "" } });
+      this.handleCloseModal();
+    }
   };
 
   async componentDidMount() {
@@ -67,12 +76,13 @@ class CardPage extends Component {
           handleCloseModal={this.handleCloseModal}
           handleChange={this.handleChange}
           handleCreateCard={this.handleCreateCard}
+          errors={this.props.errors}
         />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ decks }) => ({ decks });
+const mapStateToProps = ({ decks, errors }) => ({ decks, errors });
 
 export default connect(mapStateToProps, actions)(CardPage);
