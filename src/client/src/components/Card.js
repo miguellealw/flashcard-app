@@ -1,3 +1,4 @@
+/* Component */
 import React from "react";
 import styled from "styled-components";
 
@@ -8,33 +9,68 @@ import styled from "styled-components";
 //   margin-bottom: 1.5rem;
 // `;
 
-const CardStyle = styled.div`
+const CardContainer = styled.div`
   position: relative;
-  background: #eee;
   width: 400px;
   height: 250px;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 5rem;
   border-radius: 3%;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
   cursor: pointer;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
-
+  filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.2));
+  perspective: 850px;
   &:hover {
-    box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.2);
-    transform: translateY(-5px);
+    filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.2));
+
+    // Front Side
+    & span {
+      transform: rotateY(-180deg);
+    }
+    // Back Side
+    & div {
+      transform: rotateY(0deg);
+    }
   }
 `;
 
-const Card = () => {
+const CardFront = styled.span`
+  // background: red;
+  background: #eee;
+  transition: all 0.5s ease-in-out;
+  backface-visibility: hidden;
+  transform: rotateY(0deg);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CardBack = styled.div`
+  // background: pink;
+  background: #eee;
+  transition: all 0.5s ease-in-out;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Card = ({ front, back }) => {
   return (
-    <div>
-      <CardStyle />
-    </div>
+    <CardContainer>
+      <CardFront>{front}</CardFront>
+      <CardBack>{back}</CardBack>
+    </CardContainer>
   );
 };
 
 export default Card;
-

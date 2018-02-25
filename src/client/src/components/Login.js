@@ -80,7 +80,6 @@ const LoginForm = ({ logInUser, history }) => (
         logInUser({ email: values.email, password: values.password }, history);
         setSubmitting(false);
       } catch (error) {
-        console.log(error);
         setSubmitting(false);
       }
     }}

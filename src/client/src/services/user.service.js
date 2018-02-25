@@ -5,7 +5,7 @@ async function login(postBody) {
     const res = await axios.post("/api/v1/user/login", postBody);
     if (res.statusText === "OK") return res.data;
   } catch (error) {
-    console.log('failed login service')
+    console.log("failed login service");
     throw error;
   }
 }

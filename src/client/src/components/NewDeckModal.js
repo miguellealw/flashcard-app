@@ -14,6 +14,7 @@ const CloseButton = styled.button`
   right: 0;
   margin: 1rem;
   color: #ccc;
+  outline: none;
   svg {
     width: 2em;
     height: 2em;
@@ -52,59 +53,58 @@ const Input = styled.input`
   border-radius: 50rem;
   width: 25rem;
   transition: all 0.3s ease-in-out;
+  outline: none;
   &:hover,
   &:focus {
     border-color: #bbb;
   }
 `;
 
+const ModalStyles = {
+  overlay: {
+    backgroundColor: "rgba(0,0,0,.8)",
+  },
+  content: {
+    top: "80px",
+    left: "200px",
+    right: "200px",
+    bottom: "80px",
+    borderRadius: "10px",
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+};
+
 const NewDeckModal = ({
   showModal,
   handleCloseModal,
+  handleAfterOpenModal,
   handleChange,
-  addDeck,
-  deckName
+  handleCreateDeck,
+  deckName,
 }) => (
   <Modal
     isOpen={showModal}
-    style={{
-      overlay: {
-        backgroundColor: "rgba(0,0,0,.8)",
-      },
-      content: {
-        top: "80px",
-        left: "200px",
-        right: "200px",
-        bottom: "80px",
-        borderRadius: "10px",
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-        flexDirection: "column",
-      },
-    }}
+    onAfterOpen={() => handleAfterOpenModal(this.deckNameInput)}
+    onRequestClose={this.handle}
+    style={ModalStyles}
+    appElement={document.getElementById("root")}
   >
     <Title>New Deck Name</Title>
     <Input
       type="text"
       placeholder="Deck Name"
       name="deckName"
+      innerRef={deckName => (this.deckNameInput = deckName)}
       onChange={handleChange}
     />
-    <CloseButton onClick={() => handleCloseModal()}>
+    <CloseButton onClick={handleCloseModal}>
       <MdClose />
     </CloseButton>
 
-    <AddButton
-      onClick={() =>
-        addDeck({
-          name: deckName,
-          cardAmount: "26",
-          slug: "deck-7",
-          imgUrl: "https://source.unsplash.com/1600x900/?summer",
-        })
-      }
-    >
+    <AddButton onClick={async () => await handleCreateDeck(deckName)}>
       <MdAddCircle />
     </AddButton>
   </Modal>

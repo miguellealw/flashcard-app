@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Formik, Form, Field } from "formik";
 import styled from "styled-components";
 import Yup from "yup";
-import axios from "axios";
+// import axios from "axios";
+import { connect } from "react-redux";
+import * as actions from "../actions";
 
 const FormContainer = styled.div`
   display: flex;
@@ -67,7 +69,7 @@ const ErrorMessage = styled.div`
   color: #e81b0c;
 `;
 
-const SignupForm = () => (
+const SignupForm = ({signUpUser, logInUser}) => (
   <Formik
     initialValues={{
       email: "",
@@ -76,13 +78,17 @@ const SignupForm = () => (
     }}
     onSubmit={async (values, { setSubmitting }) => {
       // Log User in
-      const {data} = await axios.post("/api/v1/user/signup", {
+      // const {data} = await axios.post("/api/v1/user/signup", {
+      //   email: values.email,
+      //   password: values.password,
+      //   username: values.username,
+      // });
+      signUpUser({
         email: values.email,
         password: values.password,
         username: values.username,
-      });
+      })
       setSubmitting(false);
-      console.log('response from signup', data)
     }}
     validate={values => {
       let errors = {};
@@ -143,12 +149,14 @@ const SignupForm = () => (
   />
 );
 
-export default class Signup extends Component {
+class Signup extends Component {
   render() {
     return (
       <div>
-        <SignupForm />
+        <SignupForm {...this.props}/>
       </div>
     );
   }
 }
+
+export default connect(null, actions)(Signup);

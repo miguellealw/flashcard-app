@@ -9,11 +9,13 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 /* Components */
 import Nav from "./components/Nav";
-import DeckPage from "./containers/DeckPage";
-import CardList from "./components/CardList";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+
+/* Containers */
+import DeckPage from "./containers/DeckPage";
+import CardPage from "./containers/CardPage";
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
@@ -37,7 +39,12 @@ const Container = styled.div`
 `;
 
 const Loading = styled.div`
-  width: ;
+  width: 100;
+  // height: calc(100vh - 5rem);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const PrivateRoute = ({
@@ -51,9 +58,10 @@ const PrivateRoute = ({
     {...rest}
     render={props => {
       // render only when user is fetched
-
-      if (auth.isFetching) return <Spinner name="circle" color="#ccc" />;
-
+      if (auth.isFetching)
+        return <Loading>
+            <Spinner name="ball-scale-multiple" color="#45e6b5" />
+          </Loading>;
       return auth.loggedIn === isLoggedIn ? (
         <Component {...props} />
       ) : (
@@ -96,7 +104,7 @@ class App extends Component {
               auth={this.props.auth}
               isLoggedIn={true}
               redirectUrl={"/login"}
-              component={CardList}
+              component={CardPage}
             />
             <PrivateRoute
               path="/login"

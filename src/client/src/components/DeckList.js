@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import Deck from "./Deck";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
+// import axios from "axios";
 
 const DeckListContainer = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const Title = styled.h2`
   font-weight: bold;
   text-transform: uppercase;
   margin: 5rem 0;
-  letter-spacing: 5px;
+  // letter-spacing: 5px;
 `;
 
 const DeckContainer = styled.ul`
@@ -31,82 +31,62 @@ const DeckContainer = styled.ul`
   }
 `;
 
-export default class DeckList extends Component {
-  state = {
-    decks: [
-      {
-        name: "deck 1",
-        cardAmount: "14",
-        slug: "deck-1",
-        imgUrl: "https://source.unsplash.com/1600x900/?nature",
-      },
-      {
-        name: "deck 2",
-        cardAmount: "23",
-        slug: "deck-2",
-        imgUrl: "https://source.unsplash.com/1600x900/?water",
-      },
-      {
-        name: "deck 3",
-        cardAmount: "32",
-        slug: "deck-3",
-        imgUrl: "https://source.unsplash.com/1600x900/?night",
-      },
-      {
-        name: "deck 4",
-        cardAmount: "25",
-        slug: "deck-4",
-        imgUrl: "https://source.unsplash.com/1600x900/?architecture",
-      },
-      {
-        name: "deck 5",
-        cardAmount: "26",
-        slug: "deck-5",
-        imgUrl: "https://source.unsplash.com/1600x900/?rain",
-      },
-      {
-        name: "deck 6",
-        cardAmount: "23",
-        slug: "deck-6",
-        imgUrl: "https://source.unsplash.com/1600x900/?winter",
-      },
-      {
-        name: "deck 7",
-        cardAmount: "26",
-        slug: "deck-7",
-        imgUrl: "https://source.unsplash.com/1600x900/?summer",
-      },
-    ],
-    deckFromDB: [],
-  };
+const Header = styled.div`
+  width: 100%;
+  // background: pink;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-  async componentDidMount() {
-    // TODO: Fetch decks belonging to user
-    const { data } = await axios.get("/api/v1/deck");
-    this.setState({ deckFromDB: data });
-    // console.log(data);
+const NewDeckButton = styled.button`
+  padding: 0.7rem 2.5rem;
+  border-radius: 10rem;
+  // border: 0.1rem solid black;
+  border: none;
+  cursor: pointer;
+  background: black;
+  color: white;
+  transition: all 0.3s ease;
+  outline: none;
+  &:hover {
+    // transform: translateY(-.2rem);
+    // box-shadow: 0px 5px .5rem rgba(0,0,0,.3);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
   }
+`;
 
-  renderDecks = () => {
-    return this.state.decks.map((deck, i) => (
-      <li key={i}>
-        <Link to={`${this.props.match.url}/${deck.slug}`}>
-          <Deck
-            name={deck.name}
-            cardAmount={deck.cardAmount}
-            imgUrl={deck.imgUrl}
-          />
-        </Link>
-      </li>
-    ));
-  };
+const EmptyDeckMessage = styled.p`
+  color: #ccc;
+`;
 
-  render() {
-    return (
-      <DeckListContainer>
-        <Title>Your Decks</Title>
-        <DeckContainer>{this.renderDecks()}</DeckContainer>
-      </DeckListContainer>
-    );
-  }
-}
+const DeckList = ({ decks, addDeck, handleOpenModal, match }) => (
+  <DeckListContainer>
+    <Header>
+      <Title>Your Decks</Title>
+      <Link to={`/${match.url}`} onClick={handleOpenModal}>
+        <NewDeckButton>+ Deck</NewDeckButton>
+      </Link>
+    </Header>
+    <DeckContainer>
+      {!decks[0] ? (
+        <EmptyDeckMessage>You Currently Have No Decks</EmptyDeckMessage>
+      ) : (
+        decks.map((deck, i) => (
+          <li key={i}>
+            <Link to={`${match.url}/${deck.slug}`}>
+              <Deck
+                name={deck.name}
+                cardAmount={deck.cards.length}
+                // imgUrl={deck.imgUrl}
+              />
+            </Link>
+          </li>
+        ))
+      )}
+    </DeckContainer>
+  </DeckListContainer>
+);
+
+export default DeckList;

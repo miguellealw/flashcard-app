@@ -1,9 +1,15 @@
 // import axios from "axios";
 import userServices from "../services/user.service";
+import deckServices from "../services/deck.service";
+import cardServices from "../services/card.service";
 
 export const fetchUser = () => async dispatch => {
   dispatch(request({ user: null }));
   try {
+    // setTimeout(async () => {
+    //   const user = await userServices.fetchCurrentUser();
+    //   dispatch(success(user));
+    // }, 10000);
     const user = await userServices.fetchCurrentUser();
     // dispatch({ type: "FETCH_USER", payload: user });
     dispatch(success(user));
@@ -51,7 +57,7 @@ export const logInUser = (postBody, history) => async dispatch => {
 
   try {
     const user = await userServices.login(postBody);
-    history.push("/");
+    history.push("/decks");
     if (user) dispatch(success(user));
   } catch (error) {
     dispatch(failure(error));
@@ -73,4 +79,69 @@ export const logoutUser = () => async dispatch => {
   // await axios.get("/api/v1/user/logout");
   userServices.logout();
   dispatch({ type: "LOGOUT_USER" });
+};
+
+/* Deck Actions */
+
+export const fetchDecks = () => async dispatch => {
+  dispatch(request());
+  try {
+    const userDecks = await deckServices.fetchDecks();
+    dispatch(success(userDecks));
+  } catch (error) {
+    dispatch(failure(error));
+  }
+
+  function request() {
+    return { type: "FETCH_DECK_REQUEST" };
+  }
+  function success(userDecks) {
+    return { type: "FETCH_DECK_SUCCESS", userDecks };
+  }
+  function failure(error) {
+    return { type: "FETCH_DECK_FAILURE", error };
+  }
+};
+
+export const createDeck = deckName => async dispatch => {
+  dispatch(request());
+  try {
+    const newDeck = await deckServices.createDeck(deckName);
+    dispatch(success(newDeck));
+  } catch (error) {
+    dispatch(failure(error));
+  }
+
+  function request() {
+    return { type: "CREATE_DECK_REQUEST" };
+  }
+  function success(newDeck) {
+    return { type: "CREATE_DECK_SUCCESS", newDeck };
+  }
+  function failure(error) {
+    return { type: "CREATE_DECK_FAILURE", error };
+  }
+};
+
+/* Card Actions */
+export const createCard = (deckSlug, front, back) => async dispatch => {
+  console.log('this is the create card action')
+  dispatch(request());
+
+  try {
+    const newCard = await cardServices.createCard(deckSlug, front, back);
+    dispatch(success(newCard, deckSlug));
+  } catch (error) {
+    dispatch(failure(error));
+  }
+
+  function request() {
+    return { type: "CREATE_CARD_REQUEST" };
+  }
+  function success(newCard, deckSlug) {
+    return { type: "CREATE_CARD_SUCCESS", newCard, deckSlug };
+  }
+  function failure(error) {
+    return { type: "CREATE_CARD_FAILURE", error };
+  }
 };

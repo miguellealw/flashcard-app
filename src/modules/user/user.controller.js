@@ -60,9 +60,9 @@ function currentUser(req, res) {
     decks,
     username,
   }))(req.user);
-  if (req.user) {
-    return res.json(userObj);
-  }
+
+  if (req.user) return res.json(userObj);
+
   return res.status(401).json(null);
 }
 

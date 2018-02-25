@@ -30,19 +30,17 @@ const Navigation = styled.nav`
   }
 `;
 
-// const Seperator = styled.span`
-//   border-right: 5px solid black;
-//   padding-left: 3rem;
-// `;
-
 class Nav extends Component {
   renderNav = () => {
     if (!this.props.auth.loggedIn) {
       return [
-        <Link key="1" to="/login">
+        <Link key="1" to="/">
+          <li>Home</li>
+        </Link>,
+        <Link key="2" to="/login">
           <li>Log In</li>
         </Link>,
-        <Link key="2" to="/signup">
+        <Link key="3" to="/signup">
           <li>Sign Up</li>
         </Link>,
       ];
@@ -59,27 +57,17 @@ class Nav extends Component {
 
   render() {
     return (
-      <Navigation>
-        {!this.props.auth.isFetching ? (
-          <ul>
-            <Link to="/">
-              <li>Home</li>
-            </Link>
-            {this.renderNav()}
-            {/* {!this.props.auth ? <div>Loading...</div> : this.renderNav()} */}
-          </ul>
-        ) : (
-          <div />
+      <div>
+        {!this.props.auth.isFetching && (
+          <Navigation>
+            <ul>{this.renderNav()}</ul>
+          </Navigation>
         )}
-      </Navigation>
+      </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    auth: state.auth,
-  };
-}
+const mapStateToProps = ({ auth }) => ({ auth });
 
 export default connect(mapStateToProps, actions)(Nav);
