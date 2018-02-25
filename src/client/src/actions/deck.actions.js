@@ -1,6 +1,5 @@
 import deckServices from "../services/deck.service";
 
-
 export const fetchDecks = () => async dispatch => {
   dispatch(request());
   try {
@@ -38,5 +37,25 @@ export const createDeck = deckName => async dispatch => {
   }
   function failure(error) {
     return { type: "CREATE_DECK_FAILURE", error };
+  }
+};
+
+export const deleteDeck = deckId => async dispatch => {
+  dispatch(request());
+
+  try {
+    const deletedDeck = await deckServices.deleteDeck(deckId);
+    dispatch(success(deletedDeck));
+  } catch (error) {
+    dispatch(failure(error));
+  }
+  function request() {
+    return { type: "DELETE_DECK_REQUEST" };
+  }
+  function success(deletedDeck) {
+    return { type: "DELETE_DECK_SUCCESS", deletedDeck };
+  }
+  function failure(error) {
+    return { type: "DELETE_DECK_FAILURE", error };
   }
 };

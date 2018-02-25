@@ -10,7 +10,13 @@ import {
   EmptyDeckMessage,
 } from "./styles/DeckList.styles";
 
-const DeckList = ({ decks, addDeck, handleOpenModal, match }) => (
+const DeckList = ({
+  decks,
+  addDeck,
+  handleOpenModal,
+  match,
+  handleDeleteDeck,
+}) => (
   <DeckListContainer>
     <Header>
       <Title>Your Decks</Title>
@@ -28,6 +34,8 @@ const DeckList = ({ decks, addDeck, handleOpenModal, match }) => (
               <Deck
                 name={deck.name}
                 cardAmount={deck.cards.length}
+                handleDeleteDeck={handleDeleteDeck}
+                deckId={deck._id}
                 // imgUrl={deck.imgUrl}
               />
             </Link>

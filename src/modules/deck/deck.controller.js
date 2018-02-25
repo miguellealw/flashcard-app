@@ -87,6 +87,7 @@ async function deleteDeckById(req, res, next) {
       req.user,
       req.params.id,
     );
+    console.log('newArr', newArr)
     res.status(200).json(removedDeck);
   } catch (error) {
     next(error);

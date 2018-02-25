@@ -19,7 +19,17 @@ async function createDeck(name) {
   }
 }
 
+async function deleteDeck(id) {
+  try {
+    const res = await axios.delete(`/api/v1/deck/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export default {
   fetchDecks,
   createDeck,
+  deleteDeck,
 };

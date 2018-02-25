@@ -36,6 +36,13 @@ class DeckPage extends Component {
     this.handleCloseModal();
   };
 
+  handleDeleteDeck = deckId => e => {
+    // stop deck from going to cards page
+    e.preventDefault();
+    this.props.deleteDeck(deckId);
+    // this.props.fetchUser();
+  };
+
   handleChange = e => {
     // console.log(e.target.value);
     this.setState({ deckName: e.target.value });
@@ -50,6 +57,7 @@ class DeckPage extends Component {
           match={this.props.match}
           handleOpenModal={this.handleOpenModal}
           handleCloseModal={this.handleCloseModal}
+          handleDeleteDeck={this.handleDeleteDeck}
         />
         <NewDeckModal
           showModal={this.state.showModal}
@@ -72,4 +80,6 @@ const mapStateToProps = ({ decks, user }) => ({
 export default connect(mapStateToProps, {
   fetchDecks: reduxActions.fetchDecks,
   createDeck: reduxActions.createDeck,
+  deleteDeck: reduxActions.deleteDeck,
+  fetchUser: reduxActions.fetchUser,
 })(DeckPage);

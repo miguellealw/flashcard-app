@@ -1,6 +1,7 @@
 export default function errors(state = { errorMessage: null }, action) {
   switch (action.type) {
     case "FETCH_DECK_FAILURE":
+    case "DELETE_DECK_FAILURE":
     case "CREATE_DECK_FAILURE":
     case "CREATE_CARD_FAILURE":
       const errorMessage = action.error.response.data.error;

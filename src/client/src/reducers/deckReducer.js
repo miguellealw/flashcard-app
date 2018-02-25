@@ -15,8 +15,8 @@ export default function decks(state = [], action) {
     // else return [...action.userDecks]
     // return [...state].concat(action.userDecks);
     // case "FETCH_DECK_FAILURE":
-      // return errorReducer(state, action)
-      // return [{ message: "error in fethcing deck" }];
+    // return errorReducer(state, action)
+    // return [{ message: "error in fethcing deck" }];
 
     case "CREATE_DECK_REQUEST":
       return state;
@@ -37,6 +37,16 @@ export default function decks(state = [], action) {
 
     // return action.error
 
+    case "DELETE_DECK_REQUEST":
+      return state;
+
+    case "DELETE_DECK_SUCCESS":
+      const deletedDeck = state.find(
+        deck => deck._id === action.deletedDeck._id,
+      );
+      const indexOfDeletedDeck = state.indexOf(deletedDeck);
+      state.splice(indexOfDeletedDeck, 1);
+      return [...state];
     default:
       return state;
   }
