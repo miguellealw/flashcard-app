@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import DeckList from "../components/DeckList";
 // import Modal from '../components/Modal'
-import NewDeckModal from "../components/NewDeckModal";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+
+/* Components */
+import DeckList from "../components/Decks/DeckList";
+import NewDeckModal from "../components/Decks/NewDeckModal";
+
+/* Redux Actions */
+// import { fetchDecks, createDeck } from "../actions";
+import reduxActions from "../actions";
 
 class DeckPage extends Component {
   state = {
@@ -18,7 +23,7 @@ class DeckPage extends Component {
     this.setState({ showModal: true });
   };
 
-  handleAfterOpenModal = (deckNameInput) => {
+  handleAfterOpenModal = deckNameInput => {
     deckNameInput.focus();
   };
 
@@ -64,4 +69,7 @@ const mapStateToProps = ({ decks, user }) => ({
   user,
 });
 
-export default connect(mapStateToProps, actions)(DeckPage);
+export default connect(mapStateToProps, {
+  fetchDecks: reduxActions.fetchDecks,
+  createDeck: reduxActions.createDeck,
+})(DeckPage);

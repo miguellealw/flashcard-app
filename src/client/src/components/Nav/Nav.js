@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+import reduxActions from "../../actions";
 
 const Navigation = styled.nav`
   display: flex;
@@ -70,4 +70,6 @@ class Nav extends Component {
 
 const mapStateToProps = ({ auth }) => ({ auth });
 
-export default connect(mapStateToProps, actions)(Nav);
+export default connect(mapStateToProps, {
+  logoutUser: reduxActions.logoutUser,
+})(Nav);

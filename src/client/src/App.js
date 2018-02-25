@@ -2,16 +2,17 @@ import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import styled, { injectGlobal } from "styled-components";
 import { connect } from "react-redux";
-import * as actions from "./actions";
 import Spinner from "react-spinkit";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
+import reduxActions from "./actions";
+
 /* Components */
-import Nav from "./components/Nav";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import Nav from "./components/Nav/Nav";
+import Home from "./components/Home/Home";
+import LoginPage from "./containers/LoginPage";
+import SignupPage from "./containers/SignupPage";
 
 /* Containers */
 import DeckPage from "./containers/DeckPage";
@@ -114,7 +115,7 @@ class App extends Component {
               isLoggedIn={false}
               redirectUrl={"/decks"}
               component={props => (
-                <Login history={props.history} handleLogin={this.handleLogin} />
+                <LoginPage history={props.history} handleLogin={this.handleLogin} />
               )}
             />
             <PrivateRoute
@@ -122,7 +123,7 @@ class App extends Component {
               auth={this.props.auth}
               isLoggedIn={false}
               redirectUrl={"/decks"}
-              component={Signup}
+              component={SignupPage}
             />
           </Container>
         </div>
@@ -137,6 +138,8 @@ class App extends Component {
 //   };
 // }
 
-const mapStateToProps = ({auth}) => ({auth}) 
+const mapStateToProps = ({ auth }) => ({ auth });
 
-export default connect(mapStateToProps, actions)(App);
+export default connect(mapStateToProps, { fetchUser: reduxActions.fetchUser })(
+  App,
+);

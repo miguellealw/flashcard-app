@@ -1,16 +1,7 @@
-/* Component */
-import React from "react";
 import styled from "styled-components";
-import { slideFromBottom } from "./animations/index";
+import { slideFromBottom } from "../../animations";
 
-// const CardStyle = styled.div`
-//   width: 400px;
-//   height: 250px;
-//   background: gray;
-//   margin-bottom: 1.5rem;
-// `;
-
-const CardContainer = styled.div`
+export const CardContainer = styled.div`
   position: relative;
   width: 400px;
   height: 250px;
@@ -38,7 +29,7 @@ const CardContainer = styled.div`
   // }
 `;
 
-const CardFront = styled.span`
+export const CardFront = styled.span`
   // background: red;
   background: #eee;
   transition: all 0.5s ease-in-out;
@@ -52,7 +43,7 @@ const CardFront = styled.span`
   align-items: center;
 `;
 
-const CardBack = styled.div`
+export const CardBack = styled.div`
   // background: pink;
   background: #eee;
   transition: all 0.5s ease-in-out;
@@ -65,14 +56,3 @@ const CardBack = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-const Card = ({ front, back }) => {
-  return (
-    <CardContainer>
-      <CardFront>{front}</CardFront>
-      <CardBack>{back}</CardBack>
-    </CardContainer>
-  );
-};
-
-export default Card;

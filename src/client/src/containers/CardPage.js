@@ -1,9 +1,15 @@
 import React, { Component } from "react";
-import CardList from "../components/CardList";
-import NewCardModal from "../components/NewCardModal";
 import { connect } from "react-redux";
-import * as actions from "../actions";
+// import * as actions from "../actions";
 import moment from "moment";
+
+/* Components */
+import NewCardModal from "../components/Cards/NewCardModal";
+import CardList from "../components/Cards/CardList";
+
+/* Redux Actions */
+// import { clearErrors, createCard, fetchDecks } from "../actions";
+import reduxActions from "../actions";
 
 class CardPage extends Component {
   state = {
@@ -85,4 +91,8 @@ class CardPage extends Component {
 
 const mapStateToProps = ({ decks, errors }) => ({ decks, errors });
 
-export default connect(mapStateToProps, actions)(CardPage);
+export default connect(mapStateToProps, {
+  clearErrors: reduxActions.clearErrors,
+  createCard: reduxActions.createCard,
+  fetchDecks: reduxActions.fetchDecks,
+})(CardPage);

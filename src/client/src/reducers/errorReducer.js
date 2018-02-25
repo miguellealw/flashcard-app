@@ -3,7 +3,8 @@ export default function errors(state = { errorMessage: null }, action) {
     case "FETCH_DECK_FAILURE":
     case "CREATE_DECK_FAILURE":
     case "CREATE_CARD_FAILURE":
-      return { ...state.error, errorMessage: action.error };
+      const errorMessage = action.error.response.data.error;
+      return { ...state.error, errorMessage };
     case "CLEAR_ERRORS":
       return { ...state.error, errorMessage: null };
     default:

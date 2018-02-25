@@ -1,8 +1,7 @@
-/* Component */
-import React from "react";
-import styled from "styled-components";
+import styled from 'styled-components'
 
-const DeckInfo = styled.div`
+
+export const DeckInfo = styled.div`
   position: absolute;
   bottom: 0px;
   left: 0;
@@ -35,7 +34,7 @@ const DeckInfo = styled.div`
 //   }
 // `;
 
-const DeckContainer = styled.div`
+export const DeckContainer = styled.div`
   position: relative;
   // background: #989898;
   background: whitesmoke;
@@ -60,20 +59,3 @@ const DeckContainer = styled.div`
     }
   }
 `;
-
-const Deck = ({ name, cardAmount, imgUrl, match }) => {
-  return (
-    <DeckContainer>
-      {/* <DeckImg>
-        <img src={imgUrl} alt="Deck Img" />
-      </DeckImg> */}
-      <DeckInfo>
-        <h3>{name}</h3>
-        {/* <p>{match.params.deckName}</p> */}
-        <p>{cardAmount} Cards</p>
-      </DeckInfo>
-    </DeckContainer>
-  );
-};
-
-export default Deck;
