@@ -4,31 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import reduxActions from "../../actions";
 
-const Navigation = styled.nav`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  height: 5rem;
-  background: #ebebeb;
-  // position: absolute;
-  & ul {
-    display: flex;
-    align-items: center;
-
-    & a {
-      text-decoration: none;
-      color: black;
-      // background: red;
-      margin-right: 3rem;
-      &:hover {
-        text-decoration: underline;
-      }
-      & li {
-        list-style: none;
-      }
-    }
-  }
-`;
+import { Navigation } from "./styles/Nav.styles";
 
 class Nav extends Component {
   renderNav = () => {

@@ -50,6 +50,11 @@ export const FormContainer = styled.div`
       border: 2px solid black;
       transition: all 0.3s ease-in-out;
 
+      &:disabled,
+      &[disabled] {
+        background: red;
+      }
+
       &:hover {
         border: 2px solid black;
         background: white;
@@ -60,5 +65,9 @@ export const FormContainer = styled.div`
 `;
 
 export const ErrorMessage = styled.div`
-  color: #e81b0c;
+  color: white;
+  background: #dc3545;
+  font-size: .8em;
+  border-radius: 0.2rem;
+  padding: 0.5rem 1.5rem;
 `;

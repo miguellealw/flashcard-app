@@ -60,5 +60,9 @@ export const FormContainer = styled.div`
 `;
 
 export const ErrorMessage = styled.div`
-  color: #e81b0c;
+  color: white;
+  background: #dc3545;
+  font-size: 0.8em;
+  border-radius: 0.2rem;
+  padding: 0.5rem 1.5rem;
 `;

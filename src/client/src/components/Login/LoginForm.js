@@ -13,7 +13,10 @@ const LoginForm = ({ logInUser, history }) => (
     onSubmit={async (values, { setSubmitting }) => {
       // Log User In
       try {
+        setSubmitting(true);
+
         logInUser({ email: values.email, password: values.password }, history);
+
         setSubmitting(false);
       } catch (error) {
         setSubmitting(false);
