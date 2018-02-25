@@ -59,9 +59,11 @@ const PrivateRoute = ({
     render={props => {
       // render only when user is fetched
       if (auth.isFetching)
-        return <Loading>
+        return (
+          <Loading>
             <Spinner name="ball-scale-multiple" color="#45e6b5" />
-          </Loading>;
+          </Loading>
+        );
       return auth.loggedIn === isLoggedIn ? (
         <Component {...props} />
       ) : (
@@ -129,10 +131,12 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    auth: state.auth,
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     auth: state.auth,
+//   };
+// }
+
+const mapStateToProps = ({auth}) => ({auth}) 
 
 export default connect(mapStateToProps, actions)(App);
