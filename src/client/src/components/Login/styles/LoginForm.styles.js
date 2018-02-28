@@ -4,7 +4,7 @@ export const FormContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 5rem);
+  height: calc(100vh - 5.5rem);
   form {
     width: 50%;
     display: flex;
@@ -52,14 +52,17 @@ export const FormContainer = styled.div`
 
       &:disabled,
       &[disabled] {
-        background: red;
+        background: #ccc;
+        border: 2px solid #ccc;
+        cursor: not-allowed;
+        color: gray;
       }
 
-      &:hover {
-        border: 2px solid black;
-        background: white;
-        color: black;
-      }
+      // &:hover {
+      //   border: 2px solid black;
+      //   background: white;
+      //   color: black;
+      // }
     }
   }
 `;
@@ -68,6 +71,5 @@ export const ErrorMessage = styled.div`
   color: white;
   background: #dc3545;
   font-size: .8em;
-  border-radius: 0.2rem;
   padding: 0.5rem 1.5rem;
 `;
