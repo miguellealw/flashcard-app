@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Route, Redirect } from "react-router-dom";
 import styled, { injectGlobal } from "styled-components";
 import { connect } from "react-redux";
@@ -11,12 +11,15 @@ import reduxActions from "./actions";
 /* Components */
 import Nav from "./components/Nav/Nav";
 import Home from "./components/Home/Home";
-import LoginPage from "./containers/LoginPage";
-import SignupPage from "./containers/SignupPage";
+import FlashMessage from "./components/Widgets/FlashMessage";
 
 /* Containers */
+import LoginPage from "./containers/LoginPage";
+import SignupPage from "./containers/SignupPage";
 import DeckPage from "./containers/DeckPage";
 import CardPage from "./containers/CardPage";
+// import flash from "./reducers/flashReducer";
+// import FlashMessage from './components/Widgets/FlashMessage'
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
@@ -41,7 +44,7 @@ const Container = styled.div`
 
 const Loading = styled.div`
   width: 100;
-  // height: calc(100vh - 5rem);
+  // height: calc(100vh - 5.5rem);
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -52,7 +55,7 @@ const PrivateRoute = ({
   component: Component,
   auth,
   redirectUrl,
-  isLoggedIn,
+  isGuest,
   ...rest
 }) => (
   <Route
@@ -65,7 +68,7 @@ const PrivateRoute = ({
             <Spinner name="ball-scale-multiple" color="#45e6b5" />
           </Loading>
         );
-      return auth.loggedIn === isLoggedIn ? (
+      return auth.loggedIn === isGuest ? (
         <Component {...props} />
       ) : (
         <Redirect to={redirectUrl} />
@@ -82,14 +85,15 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <Fragment>
           <Nav handleLogout={this.handleLogout} />
+          <FlashMessage />
           <Container>
             <PrivateRoute
               exact
               path="/"
               auth={this.props.auth}
-              isLoggedIn={false}
+              isGuest={false}
               redirectUrl={"/decks"}
               component={Home}
             />
@@ -97,7 +101,7 @@ class App extends Component {
               exact
               path="/decks"
               auth={this.props.auth}
-              isLoggedIn={true}
+              isGuest={true}
               redirectUrl={"/login"}
               component={DeckPage}
             />
@@ -105,40 +109,37 @@ class App extends Component {
               exact
               path="/decks/:deckName"
               auth={this.props.auth}
-              isLoggedIn={true}
+              isGuest={true}
               redirectUrl={"/login"}
               component={CardPage}
             />
             <PrivateRoute
               path="/login"
               auth={this.props.auth}
-              isLoggedIn={false}
+              isGuest={false}
               redirectUrl={"/decks"}
               component={props => (
-                <LoginPage history={props.history} handleLogin={this.handleLogin} />
+                <LoginPage
+                  history={props.history}
+                  handleLogin={this.handleLogin}
+                />
               )}
             />
             <PrivateRoute
               path="/signup"
               auth={this.props.auth}
-              isLoggedIn={false}
+              isGuest={false}
               redirectUrl={"/decks"}
               component={SignupPage}
             />
           </Container>
-        </div>
+        </Fragment>
       </Router>
     );
   }
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     auth: state.auth,
-//   };
-// }
-
-const mapStateToProps = ({ auth }) => ({ auth });
+const mapStateToProps = ({ auth, flash }) => ({ auth, flash });
 
 export default connect(mapStateToProps, { fetchUser: reduxActions.fetchUser })(
   App,
