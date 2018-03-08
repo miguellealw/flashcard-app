@@ -1,4 +1,5 @@
 import deckServices from "../services/deck.service";
+import { displayFlash } from "./flash.actions";
 
 export const fetchDecks = () => async dispatch => {
   dispatch(request());
@@ -21,11 +22,23 @@ export const fetchDecks = () => async dispatch => {
 };
 
 export const createDeck = deckName => async dispatch => {
+  if(deckName.trim() === "") {
+    displayFlash(dispatch, {status: "error", message: "Please Give Your Deck A Name!"})
+    return;
+  }
   dispatch(request());
   try {
     const newDeck = await deckServices.createDeck(deckName);
     dispatch(success(newDeck));
+    displayFlash(dispatch, { status: "success", message: "New Deck Created" });
   } catch (error) {
+    const errorMessage = error.response.data.error;
+    if (errorMessage) {
+      displayFlash(dispatch, {
+        status: "error",
+        message: `'${deckName}' is already taken!`,
+      });
+    }
     dispatch(failure(error));
   }
 
@@ -46,6 +59,10 @@ export const deleteDeck = deckId => async dispatch => {
   try {
     const deletedDeck = await deckServices.deleteDeck(deckId);
     dispatch(success(deletedDeck));
+    displayFlash(dispatch, {
+      status: "error",
+      message: "Deck Successfully Deleted",
+    });
   } catch (error) {
     dispatch(failure(error));
   }

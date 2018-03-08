@@ -1,15 +1,15 @@
 import userServices from "../services/user.service";
+import { displayFlash } from "./flash.actions";
 
 export const fetchUser = () => async dispatch => {
   dispatch(request({ user: null }));
   try {
-    // setTimeout(async () => {
-    //   const user = await userServices.fetchCurrentUser();
-    //   dispatch(success(user));
-    // }, 10000);
     const user = await userServices.fetchCurrentUser();
-    // dispatch({ type: "FETCH_USER", payload: user });
     dispatch(success(user));
+    displayFlash(dispatch, {
+      status: "success",
+      message: "Welcome Back",
+    });
   } catch (error) {
     dispatch(failure(error.response.statusText));
   }
@@ -51,12 +51,24 @@ export const logInUser = (postBody, history) => async dispatch => {
   // const { data: user } = await axios.post("/api/v1/user/login", postBody);
   // dispatch({ type: "LOGIN_USER", payload: user });
   dispatch(request());
-
+  
   try {
     const user = await userServices.login(postBody);
+    dispatch(success(user));
     history.push("/decks");
-    if (user) dispatch(success(user));
+
+    displayFlash(dispatch, {
+      status: "success",
+      message: "Successfully Signed In",
+    });
+
   } catch (error) {
+
+    displayFlash(dispatch, {
+      status: "error",
+      message: "Email or Password is Incorrect"
+    })
+
     dispatch(failure(error));
   }
 
@@ -76,4 +88,9 @@ export const logoutUser = () => async dispatch => {
   // await axios.get("/api/v1/user/logout");
   userServices.logout();
   dispatch({ type: "LOGOUT_USER" });
+
+  displayFlash(dispatch, {
+    status: "error",
+    message: "Goodbye...",
+  });
 };

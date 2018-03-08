@@ -1,11 +1,35 @@
-import React, { Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import Flash from "./styles/Flash.styles";
+import SlideFromBottom from "../animations/SlideFromBottom";
+import { connect } from "react-redux";
 
-const FlashMessage = ({ success, error, children }) => (
-  <Fragment>
-    {success && <Flash success>{children}</Flash>}
-    {error && <Flash error>{children}</Flash>}
-  </Fragment>
-);
+class FlashMessage extends Component {
+  displayFlashMessage = () => {
+    const { message, status, show } = this.props.flash;
+    return status === "success" ? (
+      <SlideFromBottom in={!!show}>
+        {styles => (
+          <Flash style={styles} success>
+            {message}
+          </Flash>
+        )}
+      </SlideFromBottom>
+    ) : (
+      <SlideFromBottom in={!!show}>
+        {styles => (
+          <Flash style={styles} error>
+            {message}
+          </Flash>
+        )}
+      </SlideFromBottom>
+    );
+  };
 
-export default FlashMessage;
+  render() {
+    return <Fragment>{this.displayFlashMessage()}</Fragment>;
+  }
+}
+
+const mapStateToProps = ({ flash }) => ({ flash });
+
+export default connect(mapStateToProps)(FlashMessage);

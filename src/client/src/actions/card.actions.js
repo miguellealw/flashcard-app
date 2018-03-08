@@ -1,9 +1,9 @@
 import cardServices from "../services/card.service";
+import { displayFlash } from "./flash.actions";
 
 export function clearErrors() {
   return { type: "CLEAR_ERRORS" };
 }
-
 
 export const createCard = (deckSlug, front, back) => async (
   dispatch,
@@ -13,6 +13,10 @@ export const createCard = (deckSlug, front, back) => async (
   // console.log('state errros', !!stateErrors)
   try {
     const newCard = await cardServices.createCard(deckSlug, front, back);
+    displayFlash(dispatch, {
+      status: "success",
+      message: "New Card Created"
+    })
     let stateErrors = getState().errors.errorMessage;
     if (!!stateErrors) {
       dispatch(clearErrors());
