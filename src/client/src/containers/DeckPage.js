@@ -13,6 +13,7 @@ import reduxActions from "../actions";
 class DeckPage extends Component {
   state = {
     showModal: false,
+    deckName: "",
   };
 
   async componentDidMount() {
@@ -31,9 +32,12 @@ class DeckPage extends Component {
     this.setState({ showModal: false });
   };
 
-  handleCreateDeck = deckName => {
+  handleCreateDeck = deckName => e => {
+    e.preventDefault();
     this.props.createDeck(deckName);
-    this.handleCloseModal();
+    if (deckName.trim() !== "") {
+      this.handleCloseModal();
+    }
   };
 
   handleDeleteDeck = deckId => e => {
@@ -66,15 +70,17 @@ class DeckPage extends Component {
           deckName={this.state.deckName}
           handleCreateDeck={this.handleCreateDeck}
           handleAfterOpenModal={this.handleAfterOpenModal}
+          inputDeckName={this.state.inputDeckName}
         />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ decks, user }) => ({
+const mapStateToProps = ({ decks, user, flash }) => ({
   decks,
   user,
+  flash,
 });
 
 export default connect(mapStateToProps, {
