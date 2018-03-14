@@ -14,7 +14,14 @@ import {
   DeckTimestamp,
 } from "./styles/CardList.styles";
 
-const CardList = ({ decks, slug, handleOpenModal, currentDeck, deckDate }) => {
+const CardList = ({
+  decks,
+  slug,
+  handleOpenModal,
+  currentDeck,
+  deckDate,
+  handleDeleteCard,
+}) => {
   // const currentDeck = decks.find(deck => deck.slug === slug);
   // const deckDate = moment(currentDeck.createdAt).format("MMM DD, YYYY");
 
@@ -38,7 +45,13 @@ const CardList = ({ decks, slug, handleOpenModal, currentDeck, deckDate }) => {
           <NoCardsMessage>No Cards in Deck</NoCardsMessage>
         ) : (
           currentDeck.cards.map(card => (
-            <Card front={card.front} back={card.back} key={card._id} />
+            <Card
+              front={card.front}
+              back={card.back}
+              key={card._id}
+              handleDeleteCard={handleDeleteCard}
+              cardId={card._id}
+            />
           ))
         )}
       </CardContainer>

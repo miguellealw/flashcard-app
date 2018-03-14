@@ -13,8 +13,8 @@ export const CardContainer = styled.div`
   transition: all 0.5s ease-in-out;
   cursor: pointer;
   filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.2));
-  perspective: 850px;
-  animation: ${slideFromBottom} 0.3s ease-in-out;
+  perspective: 950px;
+  // animation: ${slideFromBottom} 0.3s ease-in-out;
   // &:hover {
   //   filter: drop-shadow(0 0.2rem 0.5rem rgba(0, 0, 0, 0.2));
 
@@ -28,6 +28,13 @@ export const CardContainer = styled.div`
   //   }
   // }
 `;
+
+export const DeleteButton = styled.button`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+`
 
 export const CardFront = styled.span`
   // background: red;

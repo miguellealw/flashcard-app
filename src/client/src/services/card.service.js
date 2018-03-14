@@ -13,6 +13,18 @@ async function createCard(deckSlug, front, back) {
   }
 }
 
+async function deleteCard(deckSlug, cardId) {
+  try {
+    console.log("delete card service");
+    const res = await axios.delete(`/api/v1/deck/${deckSlug}/${cardId}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export default {
   createCard,
+  deleteCard,
 };

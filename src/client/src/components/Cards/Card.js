@@ -1,13 +1,23 @@
 /* Component */
-import React from "react";
-import { CardContainer, CardFront, CardBack } from "./styles/Card.styles.js";
+import React, { Fragment } from "react";
+import {
+  CardContainer,
+  CardFront,
+  CardBack,
+  DeleteButton,
+} from "./styles/Card.styles.js";
 
-const Card = ({ front, back }) => {
+const Card = ({ front, back, handleDeleteCard, cardId }) => {
   return (
-    <CardContainer>
-      <CardFront>{front}</CardFront>
-      <CardBack>{back}</CardBack>
-    </CardContainer>
+    <Fragment>
+      <CardContainer>
+        <DeleteButton onClick={() => handleDeleteCard(cardId)}>
+          Delete Card
+        </DeleteButton>
+        <CardFront>{front}</CardFront>
+        <CardBack>{back}</CardBack>
+      </CardContainer>
+    </Fragment>
   );
 };
 
