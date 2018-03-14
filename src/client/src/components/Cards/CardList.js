@@ -1,7 +1,7 @@
 /* Component */
 import React from "react";
-
 import Card from "./Card";
+import PropTypes from "prop-types";
 import {
   DeckListContainer,
   Header,
@@ -15,11 +15,10 @@ import {
 } from "./styles/CardList.styles";
 
 const CardList = ({
-  decks,
-  slug,
-  handleOpenModal,
   currentDeck,
   deckDate,
+  slug,
+  handleOpenModal,
   handleDeleteCard,
 }) => {
   // const currentDeck = decks.find(deck => deck.slug === slug);
@@ -57,6 +56,22 @@ const CardList = ({
       </CardContainer>
     </DeckListContainer>
   );
+};
+
+CardList.propTypes = {
+  slug: PropTypes.string.isRequired,
+  handleOpenModal: PropTypes.func.isRequired,
+  handleDeleteCard: PropTypes.func.isRequired,
+  deckDate: PropTypes.string.isRequired,
+  currentDeck: PropTypes.shape({
+    __v: PropTypes.number,
+    _id: PropTypes.string,
+    cards: PropTypes.array,
+    createdAt: PropTypes.string,
+    name: PropTypes.string,
+    slug: PropTypes.string,
+    updateAt: PropTypes.string,
+  }).isRequired,
 };
 
 export default CardList;

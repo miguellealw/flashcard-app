@@ -6,6 +6,7 @@ import {
   CardBack,
   DeleteButton,
 } from "./styles/Card.styles.js";
+import PropTypes from "prop-types";
 
 const Card = ({ front, back, handleDeleteCard, cardId }) => {
   return (
@@ -19,6 +20,13 @@ const Card = ({ front, back, handleDeleteCard, cardId }) => {
       </CardContainer>
     </Fragment>
   );
+};
+
+Card.propTypes = {
+  front: PropTypes.string.isRequired,
+  back: PropTypes.string.isRequired,
+  handleDeleteCard: PropTypes.func.isRequired,
+  cardId: PropTypes.string.isRequired,
 };
 
 export default Card;

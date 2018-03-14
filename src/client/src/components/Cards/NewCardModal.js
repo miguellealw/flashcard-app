@@ -11,9 +11,10 @@ import {
   InputLabel,
   FrontSideInput,
   BackSideInput,
-  ErrorMessage,
-  ModalStyles
-} from "./styles/NewCardModal.styles"; 
+  ModalStyles,
+} from "./styles/NewCardModal.styles";
+
+import PropTypes from "prop-types";
 
 const NewCardInputs = ({ handleChange }) => (
   <CardInputsContainer>
@@ -55,7 +56,7 @@ const NewCardModal = ({
     appElement={document.getElementById("root")}
   >
     <Title>New Cards</Title>
-    {errors.errorMessage && <ErrorMessage>{errors.errorMessage}</ErrorMessage>}
+    {/* {errors.errorMessage && <ErrorMessage>{errors.errorMessage}</ErrorMessage>} */}
     <NewCardInputs handleChange={handleChange} />
 
     <CloseButton onClick={handleCloseModal}>
@@ -69,5 +70,22 @@ const NewCardModal = ({
     </AddButton>
   </Modal>
 );
+
+NewCardInputs.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+};
+
+NewCardModal.propTypes = {
+  showModal: PropTypes.bool.isRequired,
+  handleCloseModal: PropTypes.func.isRequired,
+  handleAfterOpenModal: PropTypes.func,
+  handleChange: PropTypes.func.isRequired,
+  handleCreateCard: PropTypes.func.isRequired,
+  card: PropTypes.shape({
+    front: PropTypes.string.isRequired,
+    back: PropTypes.string.isRequired,
+  }).isRequired,
+  // errors,
+};
 
 export default NewCardModal;

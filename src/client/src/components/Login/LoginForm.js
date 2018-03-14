@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Field } from "formik";
 
 import { FormContainer, ErrorMessage } from "./styles/LoginForm.styles";
+import PropTypes from "prop-types";
 
 const LoginForm = ({
   values,
@@ -51,5 +52,21 @@ const LoginForm = ({
     </Form>
   </FormContainer>
 );
+
+LoginForm.propTypes = {
+  values: PropTypes.shape({
+    email: PropTypes.string,
+    password: PropTypes.string,
+  }),
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool,
+  touched: PropTypes.object,
+  errors: PropTypes.shape({
+    email: PropTypes.string,
+    password: PropTypes.string,
+  }),
+};
 
 export default LoginForm;

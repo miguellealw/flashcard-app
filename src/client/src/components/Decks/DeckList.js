@@ -9,13 +9,18 @@ import {
   NewDeckButton,
   EmptyDeckMessage,
 } from "./styles/DeckList.styles";
+import PropTypes from "prop-types";
+// import Spinner from "react-spinkit";
+// import SlideFromBottom from "../animations/SlideFromBottom";
+// import { TransitionGroup } from "react-transition-group";
 
 const DeckList = ({
   decks,
-  addDeck,
   handleOpenModal,
   match,
   handleDeleteDeck,
+  isCreatingDeck,
+  show,
 }) => (
   <DeckListContainer>
     <Header>
@@ -25,17 +30,24 @@ const DeckList = ({
       </Link>
     </Header>
     <DeckContainer>
-      {!decks[0] ? (
+      {!decks.length ? (
         <EmptyDeckMessage>You Currently Have No Decks</EmptyDeckMessage>
       ) : (
         decks.map((deck, i) => (
-          <li key={i}>
+          // isCreatingDeck ? (
+          //   <li key={i}>
+          //     <Spinner name="circle" />
+          //   </li>
+          // ) :
+
+          <li key={deck._id}>
             <Link to={`${match.url}/${deck.slug}`}>
               <Deck
                 name={deck.name}
                 cardAmount={deck.cards.length}
                 handleDeleteDeck={handleDeleteDeck}
                 deckId={deck._id}
+                match={match}
                 // imgUrl={deck.imgUrl}
               />
             </Link>
@@ -45,5 +57,14 @@ const DeckList = ({
     </DeckContainer>
   </DeckListContainer>
 );
+
+DeckList.propTypes = {
+  decks: PropTypes.array,
+  handleOpenModal: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  handleDeleteDeck: PropTypes.func.isRequired,
+  isCreatingDeck: PropTypes.bool,
+  show: PropTypes.bool,
+};
 
 export default DeckList;

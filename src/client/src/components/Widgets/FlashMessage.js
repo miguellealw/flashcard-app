@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import Flash from "./styles/Flash.styles";
 import SlideFromBottom from "../animations/SlideFromBottom";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class FlashMessage extends Component {
   displayFlashMessage = () => {
@@ -29,6 +30,14 @@ class FlashMessage extends Component {
     return <Fragment>{this.displayFlashMessage()}</Fragment>;
   }
 }
+
+FlashMessage.propTypes = {
+  flash: PropTypes.shape({
+    message: PropTypes.string,
+    status: PropTypes.string,
+    show: PropTypes.bool,
+  }),
+};
 
 const mapStateToProps = ({ flash }) => ({ flash });
 
