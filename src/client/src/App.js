@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import styled, { injectGlobal } from "styled-components";
 import { connect } from "react-redux";
 import Spinner from "react-spinkit";
+import "./global.styles";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -20,21 +21,6 @@ import DeckPage from "./containers/DeckPage";
 import CardPage from "./containers/CardPage";
 // import flash from "./reducers/flashReducer";
 // import FlashMessage from './components/Widgets/FlashMessage'
-
-injectGlobal`
-  @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
-
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
-  }
-
-  body {
-    // background: #eee;
-  }
-`;
 
 const Container = styled.div`
   width: 60%;
@@ -86,7 +72,7 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
-          <Nav handleLogout={this.handleLogout} />
+          <Nav auth={this.props.auth} logoutUser={this.props.logoutUser} />
           <FlashMessage />
           <Container>
             <PrivateRoute
@@ -141,6 +127,7 @@ class App extends Component {
 
 const mapStateToProps = ({ auth, flash }) => ({ auth, flash });
 
-export default connect(mapStateToProps, { fetchUser: reduxActions.fetchUser })(
-  App,
-);
+export default connect(mapStateToProps, {
+  fetchUser: reduxActions.fetchUser,
+  logoutUser: reduxActions.logoutUser,
+})(App);
