@@ -1,51 +1,48 @@
-import React, { Component } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import reduxActions from "../../actions";
-
+import React, { Fragment } from "react";
+import { Link, NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 import { Navigation } from "./styles/Nav.styles";
 
-class Nav extends Component {
-  renderNav = () => {
-    if (!this.props.auth.loggedIn) {
-      return [
-        <Link key="1" to="/">
-          <li>Home</li>
-        </Link>,
-        <Link key="2" to="/login">
-          <li>Log In</li>
-        </Link>,
-        <Link key="3" to="/signup">
-          <li>Sign Up</li>
-        </Link>,
-      ];
-    }
-    return [
-      <Link to="/decks" key="1">
-        <li>Your Decks</li>
-      </Link>,
-      <Link to="/" key="2" onClick={this.props.logoutUser}>
-        <li>Log Out</li>
-      </Link>,
-    ];
-  };
+const Nav = ({ auth: { loggedIn, isFetching }, logoutUser }) => (
+  <div>
+    {!isFetching && (
+      <Navigation>
+        <ul>
+          {!loggedIn ? (
+            <Fragment>
+              <NavLink to="/" exact activeClassName="selected">
+                <li>Home</li>
+              </NavLink>
+              <NavLink to="/login" activeClassName="selected">
+                <li>Log In</li>
+              </NavLink>
+              <NavLink to="/signup" activeClassName="selected">
+                <li>Sign Up</li>
+              </NavLink>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <NavLink to="/decks" activeClassName="selected">
+                <li>Your Decks</li>
+              </NavLink>
+              <Link to="/" onClick={logoutUser}>
+                <li>Log Out</li>
+              </Link>
+            </Fragment>
+          )}
+        </ul>
+      </Navigation>
+    )}
+  </div>
+);
 
-  render() {
-    return (
-      <div>
-        {!this.props.auth.isFetching && (
-          <Navigation>
-            <ul>{this.renderNav()}</ul>
-          </Navigation>
-        )}
-      </div>
-    );
-  }
-}
+Nav.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.shape({
+    isFetching: PropTypes.bool.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
+    user: PropTypes.object.isRequired,
+  }),
+};
 
-const mapStateToProps = ({ auth }) => ({ auth });
-
-export default connect(mapStateToProps, {
-  logoutUser: reduxActions.logoutUser,
-})(Nav);
+export default Nav;

@@ -15,7 +15,7 @@ export const LandingPage = styled.div`
   // position: relative;
   // top: -5rem;
   width: 100%;
-  height: calc(100vh - 5rem);
+  height: calc(100vh - 5.5rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
