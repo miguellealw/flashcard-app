@@ -24,9 +24,13 @@ const style = state => ({
 
 const SlideFromBottom = ({ in: inProp, children }) => (
   <Transition in={inProp} timeout={duration}>
-    {state => {
-      return children(style(state));
-    }}
+    {typeof children !== "function"
+      ? new Error(
+          `Expected child to be function, but instead got ${typeof children}`,
+        )
+      : state => {
+          return children(style(state));
+        }}
   </Transition>
 );
 
