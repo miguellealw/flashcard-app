@@ -25,6 +25,6 @@ export default function cards(state = [], action) {
     case CREATE_CARD_FAILURE:
       return updateArray(state, { error: { errorMessage: action.error } });
 
-    default: state;
+    default: return state;
   }
 }
