@@ -35,7 +35,8 @@ export const StudyButton = styled.button`
   border-radius: 10rem;
   border: none;
   cursor: pointer;
-  background: #45e6b5;
+  // background: #45e6b5;
+  background: linear-gradient(to bottom, #68cff2 0%, #44ffc7 100%);
   color: white;
   transition: all 0.3s ease;
   margin-right: 1rem;
