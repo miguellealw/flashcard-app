@@ -1,5 +1,3 @@
-import { updateArray, updateObject } from "../utils";
-
 import {
   GET_CURRENT_DECK,
   CLEAR_CURRENT_DECK,
@@ -23,6 +21,7 @@ import {
   DELETE_CARD_FAILURE,
 } from "../cards/cards.constants";
 
+import { updateArray, updateObject } from "../utils";
 import cards from "../cards/cardReducer";
 
 import {
