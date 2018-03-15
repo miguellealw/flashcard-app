@@ -1,12 +1,3 @@
-import {
-  CREATE_CARD_REQUEST,
-  DELETE_CARD_REQUEST,
-  CREATE_CARD_SUCCESS,
-  DELETE_CARD_SUCCESS,
-  CREATE_CARD_FAILURE,
-  DELETE_CARD_FAILURE,
-} from "../reducers/cards/cards.constants";
-
 import { createCardActions, deleteCardActions } from "./utils";
 
 import cardServices from "../services/card.service";

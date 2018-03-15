@@ -1,16 +1,5 @@
 import deckServices from "../services/deck.service";
 import { displayFlash } from "./flash.actions";
-import {
-  FETCH_DECK_REQUEST,
-  FETCH_DECK_SUCCESS,
-  FETCH_DECK_FAILURE,
-  CREATE_DECK_REQUEST,
-  CREATE_DECK_SUCCESS,
-  CREATE_DECK_FAILURE,
-  DELETE_DECK_REQUEST,
-  DELETE_DECK_SUCCESS,
-  DELETE_DECK_FAILURE,
-} from "../reducers/decks/decks.constants";
 
 import {
   fetchDecksActions,

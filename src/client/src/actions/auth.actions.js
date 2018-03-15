@@ -1,23 +1,8 @@
-import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT_USER,
-  SIGNUP_REQUEST,
-  SIGNUP_SUCCESS,
-  SIGNUP_FAILURE,
-  FETCH_USER_REQUEST,
-  FETCH_USER_SUCCESS,
-  FETCH_USER_FAILURE,
-} from "../reducers/auth/auth.constants";
+import { LOGOUT_USER } from "../reducers/auth/auth.constants";
 
 import userServices from "../services/user.service";
 import { displayFlash } from "./flash.actions";
 import { fetchUserActions, signUpUserActions, logInUserActions } from "./utils";
-
-
-
-
 
 export const fetchUser = () => async dispatch => {
   dispatch(fetchUserActions.request({ user: null }));
