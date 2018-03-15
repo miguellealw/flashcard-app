@@ -25,6 +25,7 @@ const NewCardInputs = ({ handleChange }) => (
         name="front"
         // innerRef={deckName => (this.deckNameInput = deckName)}
         onChange={handleChange}
+        innerRef={field => (this.field = field)}
       />
     </InputContainer>
 
@@ -54,6 +55,7 @@ const NewCardModal = ({
     onRequestClose={this.handleCloseModal}
     style={ModalStyles}
     appElement={document.getElementById("root")}
+    onAfterOpen={() => handleAfterOpenModal(this.field)}
   >
     <Title>New Cards</Title>
     {/* {errors.errorMessage && <ErrorMessage>{errors.errorMessage}</ErrorMessage>} */}

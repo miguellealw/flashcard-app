@@ -18,8 +18,8 @@ class CardPage extends Component {
       back: "",
     },
     showModal: false,
-    currentDeck: () =>
-      this.props.decks.find(
+    getCurrentDeck: () =>
+      this.props.decks.allDecks.find(
         deck => deck.slug === this.props.match.params.deckName,
       ),
     deckSlug: this.props.match.params.deckName,
@@ -29,6 +29,10 @@ class CardPage extends Component {
     this.setState({ showModal: true });
   };
 
+  handleAfterOpenModal = field => {
+    field.focus();
+  };
+
   handleCloseModal = () => {
     this.props.clearErrors();
     this.setState({ showModal: false });
@@ -36,22 +40,35 @@ class CardPage extends Component {
 
   handleCreateCard = async (front, back) => {
     // if(this.props.errors) return
-    const slug = this.props.match.params.deckName;
-    // await create card to get errors stored, if any
-    await this.props.createCard(slug, front, back);
-
-    // close modal and clear inputs if no errors
-    if (!this.props.errors.errorMessage) {
+    await this.props.createCard(this.state.deckSlug, front, back);
+    if (front.trim() !== "" && back.trim() !== "") {
       this.setState({ ...this.state, card: { front: "", back: "" } });
       this.handleCloseModal();
     }
+    // close modal and clear inputs if no errors
+    // await create card to get errors stored, if any
+    // if (!this.props.errors.errorMessage) {
+    // }
+  };
+
+  handleDeleteCard = async cardId => {
+    await this.props.deleteCard(this.state.deckSlug, cardId);
   };
 
   async componentDidMount() {
-    if (this.props.decks.length === 0) {
+    if (!this.props.decks.isFetched) {
       // fetch decks if deck is not stored in store
       await this.props.fetchDecks();
     }
+    this.props.getCurrentDeck(this.state.deckSlug);
+  }
+
+  componentWillMount() {
+    this.props.getCurrentDeck(this.state.deckSlug);
+  }
+
+  componentWillUnmount() {
+    this.props.clearCurrentDeck();
   }
 
   handleChange = e => {
@@ -62,26 +79,34 @@ class CardPage extends Component {
 
   render() {
     const slug = this.props.match.params.deckName;
-    const deckDate = moment(this.state.currentDeck.createdAt).format(
-      "MMM DD, YYYY",
-    );
+    let deckDate;
+    if (this.props.decks.currentDeck) {
+      deckDate =
+        this.props.decks.currentDeck &&
+        moment(this.props.decks.currentDeck.createdAt).format("MMM DD, YYYY");
+    }
+
     return (
       <div>
-        {this.props.decks.length !== 0 && (
-          <CardList
-            slug={slug}
-            decks={this.props.decks}
-            handleOpenModal={this.handleOpenModal}
-            currentDeck={this.state.currentDeck()}
-            deckDate={deckDate}
-          />
-        )}
+        {/* check if decks array is empty */}
+        {this.props.decks.allDecks.length !== 0 &&
+          this.props.decks.currentDeck && (
+            <CardList
+              slug={slug}
+              decks={this.props.decks.allDecks}
+              handleOpenModal={this.handleOpenModal}
+              handleDeleteCard={this.handleDeleteCard}
+              currentDeck={this.props.decks.currentDeck}
+              deckDate={deckDate}
+            />
+          )}
         <NewCardModal
           showModal={this.state.showModal}
           card={this.state.card}
           handleCloseModal={this.handleCloseModal}
           handleChange={this.handleChange}
           handleCreateCard={this.handleCreateCard}
+          handleAfterOpenModal={this.handleAfterOpenModal}
           errors={this.props.errors}
         />
       </div>
@@ -94,5 +119,8 @@ const mapStateToProps = ({ decks, errors }) => ({ decks, errors });
 export default connect(mapStateToProps, {
   clearErrors: reduxActions.clearErrors,
   createCard: reduxActions.createCard,
+  deleteCard: reduxActions.deleteCard,
   fetchDecks: reduxActions.fetchDecks,
+  getCurrentDeck: reduxActions.getCurrentDeck,
+  clearCurrentDeck: reduxActions.clearCurrentDeck,
 })(CardPage);

@@ -51,7 +51,12 @@ const SignupForm = ({ signUpUser, logInUser }) => (
         <Form>
           <label>
             Email:
-            <Field type="email" name="email" placeholder="jon@gmail.com" />{" "}
+            <Field
+              type="email"
+              name="email"
+              placeholder="jon@gmail.com"
+              autoFocus
+            />{" "}
           </label>{" "}
           {touched.email &&
             errors.email && <ErrorMessage> {errors.email} </ErrorMessage>}{" "}
