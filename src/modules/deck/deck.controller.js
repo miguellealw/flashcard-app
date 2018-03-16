@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const omit = require("lodash/omit");
 
 const Deck = require("./deck.model");
 const User = require("../user/user.model");
@@ -12,9 +13,8 @@ async function getAllUserDecks(req, res, next) {
     const user = await User.findOne({ email: req.user.email }).populate(
       "decks",
     );
-    res.json(user.decks);
-    // if (!user) throw new Error("User ");
-    // res.json({ message: "There are currently no decks" });
+    const pluckedDecks = user.decks.map(deck => omit(deck.toObject(), ["__v"]));
+    res.json(pluckedDecks);
   } catch (error) {
     next(error);
   }
@@ -35,8 +35,6 @@ async function getDeckBySlug(req, res, next) {
   try {
     const deck = await Deck.findOne({ slug: req.params.slug });
     if (!deck) throw new Error("This deck does not exist");
-    // if (deck) return res.json(deck);
-    // res.json({ message: "This deck does not exist" });
     res.json(deck);
   } catch (error) {
     next(error);
@@ -87,7 +85,7 @@ async function deleteDeckById(req, res, next) {
       req.user,
       req.params.id,
     );
-    console.log('newArr', newArr)
+    console.log("newArr", newArr);
     res.status(200).json(removedDeck);
   } catch (error) {
     next(error);
