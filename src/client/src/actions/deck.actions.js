@@ -20,7 +20,10 @@ export const clearCurrentDeck = () => {
   };
 };
 
-export const fetchDecks = () => async dispatch => {
+export const fetchDecks = () => async (dispatch, getState) => {
+  const isFetched = getState().decks.isFetched;
+  if (isFetched) return;
+
   dispatch(fetchDecksActions.request());
   try {
     const userDecks = await deckServices.fetchDecks();

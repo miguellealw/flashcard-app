@@ -8,7 +8,6 @@ import NewCardModal from "../components/Cards/NewCardModal";
 import CardList from "../components/Cards/CardList";
 
 /* Redux Actions */
-// import { clearErrors, createCard, fetchDecks } from "../actions";
 import reduxActions from "../actions";
 
 class CardPage extends Component {
@@ -18,10 +17,6 @@ class CardPage extends Component {
       back: "",
     },
     showModal: false,
-    getCurrentDeck: () =>
-      this.props.decks.allDecks.find(
-        deck => deck.slug === this.props.match.params.deckName,
-      ),
     deckSlug: this.props.match.params.deckName,
   };
 
@@ -56,14 +51,10 @@ class CardPage extends Component {
   };
 
   async componentDidMount() {
-    if (!this.props.decks.isFetched) {
-      // fetch decks if deck is not stored in store
-      await this.props.fetchDecks();
-    }
-    this.props.getCurrentDeck(this.state.deckSlug);
-  }
-
-  componentWillMount() {
+    // if (!this.props.decks.isFetched) {
+    // fetch decks if deck is not stored in store
+    // }
+    await this.props.fetchDecks();
     this.props.getCurrentDeck(this.state.deckSlug);
   }
 
