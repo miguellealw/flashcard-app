@@ -22,7 +22,7 @@ export function clearFlash() {
 
 export const displayFlash = (
   dispatch,
-  { status, message, duration = 3000, shouldClear = true },
+  { status = "success", message, duration = 3000, shouldClear = true },
 ) => {
   if (status === "success") dispatch(successFlash(message));
   else dispatch(errorFlash(message));

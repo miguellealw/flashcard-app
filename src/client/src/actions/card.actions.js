@@ -34,14 +34,6 @@ export const createCard = (deckSlug, front, back) => async (
   dispatch(createCardActions.request());
   try {
     const newCard = await cardServices.createCard(deckSlug, front, back);
-    displayFlash(dispatch, {
-      status: "success",
-      message: "New Card Created",
-    });
-    // let stateErrors = getState().errors.errorMessage;
-    // if (!!stateErrors) {
-    //   dispatch(clearErrors());
-    // }
     dispatch(createCardActions.success(newCard, deckSlug));
   } catch (error) {
     // const errorMessage = error.response.data.error;
@@ -56,10 +48,6 @@ export const deleteCard = (deckSlug, cardId) => async dispatch => {
       deckSlug,
       cardId,
     );
-    displayFlash(dispatch, {
-      status: "success",
-      message: "Card Deleted Successfully",
-    });
     dispatch(deleteCardActions.success(deletedDeckId, deckSlug));
   } catch (error) {
     dispatch(deleteCardActions.failure(error));

@@ -38,7 +38,11 @@ import {
 */
 export const fetchUserActions = {
   request: user => ({ type: FETCH_USER_REQUEST, user }),
-  success: user => ({ type: FETCH_USER_SUCCESS, user }),
+  success: user => ({
+    type: FETCH_USER_SUCCESS,
+    user,
+    flash: { message: "Welcome Back!" },
+  }),
   failure: error => ({ type: FETCH_USER_FAILURE, error }),
 };
 
@@ -50,7 +54,11 @@ export const signUpUserActions = {
 
 export const logInUserActions = {
   request: () => ({ type: LOGIN_REQUEST }),
-  success: user => ({ type: LOGIN_SUCCESS, user }),
+  success: user => ({
+    type: LOGIN_SUCCESS,
+    user,
+    flash: { message: "Successfully Signed In" },
+  }),
   failure: error => ({ type: LOGIN_FAILURE, error }),
 };
 
@@ -65,6 +73,7 @@ export const createCardActions = {
     type: CREATE_CARD_SUCCESS,
     newCard,
     deckSlug,
+    flash: { message: "New Card Created" },
   }),
   failure: error => ({ type: CREATE_CARD_FAILURE, error }),
 };
@@ -75,6 +84,7 @@ export const deleteCardActions = {
     type: DELETE_CARD_SUCCESS,
     deletedCardId,
     deckSlug,
+    flash: { message: "Card Deleted Successfully" },
   }),
   failure: error => ({ type: DELETE_CARD_FAILURE, error }),
 };
@@ -92,12 +102,20 @@ export const fetchDecksActions = {
 
 export const createDeckActions = {
   request: () => ({ type: CREATE_DECK_REQUEST }),
-  success: newDeck => ({ type: CREATE_DECK_SUCCESS, newDeck }),
+  success: newDeck => ({
+    type: CREATE_DECK_SUCCESS,
+    newDeck,
+    flash: { message: "New Deck Created" },
+  }),
   failure: error => ({ type: CREATE_DECK_FAILURE, error }),
 };
 
 export const deleteDeckActions = {
   request: () => ({ type: DELETE_DECK_REQUEST }),
-  success: deletedDeck => ({ type: DELETE_DECK_SUCCESS, deletedDeck }),
+  success: deletedDeck => ({
+    type: DELETE_DECK_SUCCESS,
+    deletedDeck,
+    flash: { message: "Deck Successfully Deleted" },
+  }),
   failure: error => ({ type: DELETE_DECK_FAILURE, error }),
 };

@@ -1,26 +1,27 @@
 import React, { Component, Fragment } from "react";
-import Flash from "./styles/Flash.styles";
+import { Flash, Message, ClosingIcon } from "./styles/Flash.styles";
 import SlideFromBottom from "../animations/SlideFromBottom";
 import { connect } from "react-redux";
+import { dispatch } from "redux";
 import PropTypes from "prop-types";
+import reduxActions from "../../actions/";
 
 class FlashMessage extends Component {
   displayFlashMessage = () => {
     const { message, status, show } = this.props.flash;
-    return status === "success" ? (
+    return (
       <SlideFromBottom in={!!show}>
         {styles => (
-          <Flash style={styles} success>
-            {message}
-          </Flash>
-        )}
-      </SlideFromBottom>
-    ) : (
-      <SlideFromBottom in={!!show}>
-        {styles => (
-          <Flash style={styles} error>
-            {message}
-          </Flash>
+          <Fragment>
+            <Flash
+              style={styles}
+              success={status === "success"}
+              error={(status === "error")}
+            >
+              <Message>{message}</Message>
+              <ClosingIcon onClick={this.props.clearFlash}>&times;</ClosingIcon>
+            </Flash>
+          </Fragment>
         )}
       </SlideFromBottom>
     );
@@ -40,5 +41,10 @@ FlashMessage.propTypes = {
 };
 
 const mapStateToProps = ({ flash }) => ({ flash });
+const mapDispatchToProps = dispatch => ({
+  clearFlash: () => {
+    dispatch(reduxActions.clearFlash());
+  },
+});
 
-export default connect(mapStateToProps)(FlashMessage);
+export default connect(mapStateToProps, mapDispatchToProps)(FlashMessage);

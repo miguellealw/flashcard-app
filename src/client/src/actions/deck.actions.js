@@ -33,20 +33,21 @@ export const fetchDecks = () => async (dispatch, getState) => {
   }
 };
 
-export const createDeck = (deckName, isCreatingDeck) => async dispatch => {
+export const createDeck = (deckName, isCreatingDeck) => async (
+  dispatch,
+  getState,
+) => {
   // setState({ isCreatingDeck: true });
   if (deckName.trim() === "") {
-    displayFlash(dispatch, {
+    return displayFlash(dispatch, {
       status: "error",
       message: "Please Give Your Deck A Name!",
     });
-    return;
   }
-  dispatch(createDeckActions.request());
+  dispatch(createDeckActions.request(deckName));
   try {
     const newDeck = await deckServices.createDeck(deckName);
     dispatch(createDeckActions.success(newDeck));
-    displayFlash(dispatch, { status: "success", message: "New Deck Created" });
     // setState({ isCreatingDeck: false });
   } catch (error) {
     const errorMessage = error.response.data.error;
@@ -67,10 +68,6 @@ export const deleteDeck = deckId => async dispatch => {
   try {
     const deletedDeck = await deckServices.deleteDeck(deckId);
     dispatch(deleteDeckActions.success(deletedDeck));
-    displayFlash(dispatch, {
-      status: "success",
-      message: "Deck Successfully Deleted",
-    });
   } catch (error) {
     dispatch(deleteDeckActions.failure(error));
   }
