@@ -72,6 +72,7 @@ async function updateCardById(req, res, next) {
       card => card.id === req.params.cardId,
     );
     if (!updatedCard) throw new Error("Attempted updated card not found");
+
     res.json(updatedCard);
   } catch (error) {
     // console.log(error)
