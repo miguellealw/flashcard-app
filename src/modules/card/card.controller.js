@@ -19,13 +19,11 @@ async function createCard(req, res, next) {
       throw new Error("Please provide a front and a backside to the card");
     }
     const deck = await Deck.findOne({ slug: req.params.slug });
-    const card = deck.cards.push({
-      front: req.body.front,
-      back: req.body.back,
-    });
+    const newCards = req.body;
+    // spread new cards in the cards subdocument
+    deck.cards = [...deck.cards, ...newCards]
     await deck.save();
-    const createdCard = deck.cards[deck.cards.length - 1];
-    return res.status(201).json(createdCard);
+    return res.status(201).json(deck.cards);
   } catch (error) {
     next(error);
   }
@@ -74,6 +72,7 @@ async function updateCardById(req, res, next) {
       card => card.id === req.params.cardId,
     );
     if (!updatedCard) throw new Error("Attempted updated card not found");
+
     res.json(updatedCard);
   } catch (error) {
     // console.log(error)
