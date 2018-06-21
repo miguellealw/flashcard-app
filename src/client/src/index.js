@@ -9,8 +9,13 @@ import reduxThunk from "redux-thunk";
 import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { displayFlash } from "./actions/flash.actions";
+import Modal from 'react-modal'
+// import flasher from './middlewares/flasher'
 
 import reducers from "./reducers";
+
+const rootElement = document.getElementById("root")
+Modal.setAppElement(rootElement)
 
 const flasher = store => next => action => {
   if (!action.flash) return next(action);
@@ -34,6 +39,6 @@ ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById("root"),
+  rootElement
 );
 registerServiceWorker();

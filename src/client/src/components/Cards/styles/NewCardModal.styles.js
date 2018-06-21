@@ -45,7 +45,6 @@ export const Title = styled.h2`
   font-size: 3em;
   margin: 2rem 0;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
 `;
 
 export const CardInputsContainer = styled.div`

@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import reduxActions from "../actions";
-import { Formik, Form, Field } from "formik";
+import { Formik } from "formik";
 import Yup from "yup";
 
 import LoginForm from "../components/Login/LoginForm";
 
 class LoginPage extends Component {
-  handleSubmit = values => {
-    this.props.logInUser({
-      email: values.email,
-      password: values.password,
-    }, this.props.history);
+  handleSubmit = (values, { setSubmitting }) => {
+    this.props.logInUser(
+      {
+        email: values.email,
+        password: values.password,
+      },
+      this.props.history,
+    );
     // setTimeout(() => {
     // }, 1000);
   };
@@ -19,10 +22,7 @@ class LoginPage extends Component {
   render() {
     return (
       <Formik
-        initialValues={{
-          email: "",
-          password: "",
-        }}
+        initialValues={{ email: "", password: "" }}
         onSubmit={this.handleSubmit}
         validate={values => {
           let errors = {};
@@ -42,7 +42,4 @@ class LoginPage extends Component {
   }
 }
 
-
-export default connect(null, { logInUser: reduxActions.logInUser })(
-  LoginPage,
-);
+export default connect(null, { logInUser: reduxActions.logInUser })(LoginPage);

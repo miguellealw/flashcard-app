@@ -40,7 +40,6 @@ export const AddButton = styled.button`
 export const Title = styled.h2`
   font-size: 3em;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
 `;
 export const Input = styled.input`
   padding: 0.8rem 0;

@@ -10,7 +10,10 @@ import {
   DELETE_DECK_REQUEST,
   DELETE_DECK_SUCCESS,
   DELETE_DECK_FAILURE,
-} from "./decks.constants";
+  UPDATE_DECK_REQUEST,
+  UPDATE_DECK_SUCCESS,
+  UPDATE_DECK_FAILURE,
+} from './decks.constants';
 
 import {
   CREATE_CARD_REQUEST,
@@ -19,17 +22,23 @@ import {
   DELETE_CARD_SUCCESS,
   CREATE_CARD_FAILURE,
   DELETE_CARD_FAILURE,
-} from "../cards/cards.constants";
+} from '../cards/cards.constants';
 
-import { updateArray, updateObject } from "../utils";
-import cards from "../cards/cardReducer";
+import { updateArray, updateObject, decorateItemsInArray } from '../utils';
+import cards from '../cards/cardReducer';
+
+import { combineReducers } from 'redux';
+
+// import { createSelector } from 'reselect';
 
 import {
   createDeck,
   deleteDeck,
+  updateDeck,
   getCurrentDeck,
   clearCurrentDeck,
-} from "./caseReducers";
+  toggleEditing,
+} from './caseReducers';
 
 const initialState = {
   isFetched: false,
@@ -37,6 +46,9 @@ const initialState = {
   allDecks: [],
 };
 
+// const deckSelector = state => state.decks.allDecks;
+// const currentDeckSelector = decks => {};
+// const currentDeckSelector = deckSlug => createSelector(deckSelector, (decks, deckSlug) =>  );
 export default function decks(state = initialState, action) {
   switch (action.type) {
     /* 
@@ -58,16 +70,20 @@ export default function decks(state = initialState, action) {
     case FETCH_DECK_REQUEST:
     case CREATE_DECK_REQUEST:
     case DELETE_DECK_REQUEST:
+    case UPDATE_DECK_REQUEST:
       return state;
 
     case CREATE_DECK_SUCCESS:
       return createDeck(state, action);
     case DELETE_DECK_SUCCESS:
       return deleteDeck(state, action);
+    case UPDATE_DECK_SUCCESS:
+      return updateDeck(state, action);
 
     case CREATE_DECK_FAILURE:
     case DELETE_DECK_FAILURE:
     case FETCH_DECK_FAILURE:
+    case UPDATE_DECK_FAILURE:
       return updateArray(state, {
         error: { errorMessage: action.error },
       });

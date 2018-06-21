@@ -4,14 +4,11 @@ import {
   updateItemInArray,
   removeItemInArray,
   findItemInArray,
-} from '../utils';
+} from '../../helpers';
 
 export function createDeck(state, action) {
   return updateObject(state, {
-    allDecks: updateArray(
-      state.allDecks,
-      action.newDeck
-    ),
+    allDecks: updateArray(state.allDecks, action.newDeck),
   });
 }
 

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Route, Redirect } from "react-router-dom";
-import styled, { injectGlobal } from "styled-components";
+import styled from "styled-components";
 import { connect } from "react-redux";
 import Spinner from "react-spinkit";
 import "./global.styles";

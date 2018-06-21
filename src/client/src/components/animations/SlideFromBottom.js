@@ -1,20 +1,20 @@
 import React from "react";
 import { Transition } from "react-transition-group";
 
-const duration = 300;
+const duration = 250;
 
 const defaultStyles = {
-  transition: `all ${duration}ms ease-in-out`,
+  transition: `all ${duration}ms cubic-bezier(0.455, 0.03, 0.515, 0.955)`,
   transform: "translateY(-2rem)",
   opacity: 0,
 };
 
 const transitionStyles = {
-  entering: { transform: "translateY(2rem)", opacity: 0 },
-  entered: { transform: "translateY(0rem)", opacity: 1 },
+  entering: { transform: "scale(.9)", opacity: 0 },
+  entered: { transform: "scale(1)", opacity: 1 },
 
-  exiting: { transform: "translateY(0rem)", opacity: 1 },
-  exited: { transform: "translateY(2rem)", opacity: 0 },
+  exiting: { transform: "scale(1)", opacity: 1 },
+  exited: { transform: "scale(.9)", opacity: 0 },
 };
 
 const style = state => ({
@@ -23,7 +23,7 @@ const style = state => ({
 });
 
 const SlideFromBottom = ({ in: inProp, children }) => (
-  <Transition in={inProp} timeout={duration}>
+  <Transition in={inProp} timeout={10}>
     {typeof children !== "function"
       ? new Error(
           `Expected child to be function, but instead got ${typeof children}`,

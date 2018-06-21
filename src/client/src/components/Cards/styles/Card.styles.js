@@ -48,6 +48,8 @@ export const CardFront = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size:1.2em;
+  font-weight: bold;
 `;
 
 export const CardBack = styled.div`

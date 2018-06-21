@@ -87,7 +87,7 @@ class CardPage extends Component {
               decks={this.props.decks.allDecks}
               handleOpenModal={this.handleOpenModal}
               handleDeleteCard={this.handleDeleteCard}
-              currentDeck={this.props.decks.currentDeck}
+              currentDeck={this.props.currentDeck}
               deckDate={deckDate}
             />
           )}
@@ -105,7 +105,9 @@ class CardPage extends Component {
   }
 }
 
-const mapStateToProps = ({ decks, errors }) => ({ decks, errors });
+const mapStateToProps = ({ decks, errors }) => {
+  return { currentDeck: decks.currentDeck, decks, errors };
+};
 
 export default connect(mapStateToProps, {
   clearErrors: reduxActions.clearErrors,

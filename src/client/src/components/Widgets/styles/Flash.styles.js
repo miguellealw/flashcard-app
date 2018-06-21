@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const green = "#28a745";
-const red = "#dc3545";
+const green = '#28a745';
+const red = '#dc3545';
 
 export const Flash = styled.div`
   background: ${({ success }) => (success ? green : red)};
@@ -25,10 +25,9 @@ export const Flash = styled.div`
 export const Message = styled.span`
   margin-left: 1rem;
   text-align: center;
-
 `;
 
 export const ClosingIcon = styled.span`
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
   cursor: pointer;
 `;

@@ -8,7 +8,7 @@ import {
   FETCH_USER_REQUEST,
   FETCH_USER_SUCCESS,
   FETCH_USER_FAILURE,
-} from "../reducers/auth/auth.constants";
+} from '../reducers/auth/auth.constants';
 
 import {
   CREATE_CARD_REQUEST,
@@ -17,7 +17,7 @@ import {
   DELETE_CARD_SUCCESS,
   CREATE_CARD_FAILURE,
   DELETE_CARD_FAILURE,
-} from "../reducers/cards/cards.constants";
+} from '../reducers/cards/cards.constants';
 
 import {
   FETCH_DECK_REQUEST,
@@ -29,7 +29,10 @@ import {
   DELETE_DECK_REQUEST,
   DELETE_DECK_SUCCESS,
   DELETE_DECK_FAILURE,
-} from "../reducers/decks/decks.constants";
+  UPDATE_DECK_REQUEST,
+  UPDATE_DECK_SUCCESS,
+  UPDATE_DECK_FAILURE,
+} from '../reducers/decks/decks.constants';
 
 /* 
 <========================================>
@@ -41,7 +44,7 @@ export const fetchUserActions = {
   success: user => ({
     type: FETCH_USER_SUCCESS,
     user,
-    flash: { message: "Welcome Back!" },
+    flash: { message: 'Welcome Back!' },
   }),
   failure: error => ({ type: FETCH_USER_FAILURE, error }),
 };
@@ -57,7 +60,7 @@ export const logInUserActions = {
   success: user => ({
     type: LOGIN_SUCCESS,
     user,
-    flash: { message: "Successfully Signed In" },
+    flash: { message: 'Success: Signed In' },
   }),
   failure: error => ({ type: LOGIN_FAILURE, error }),
 };
@@ -73,7 +76,7 @@ export const createCardActions = {
     type: CREATE_CARD_SUCCESS,
     newCard,
     deckSlug,
-    flash: { message: "New Card Created" },
+    flash: { message: 'Success: Card Created' },
   }),
   failure: error => ({ type: CREATE_CARD_FAILURE, error }),
 };
@@ -84,7 +87,7 @@ export const deleteCardActions = {
     type: DELETE_CARD_SUCCESS,
     deletedCardId,
     deckSlug,
-    flash: { message: "Card Deleted Successfully" },
+    flash: { message: 'Success: Card Deleted' },
   }),
   failure: error => ({ type: DELETE_CARD_FAILURE, error }),
 };
@@ -105,7 +108,7 @@ export const createDeckActions = {
   success: newDeck => ({
     type: CREATE_DECK_SUCCESS,
     newDeck,
-    flash: { message: "New Deck Created" },
+    flash: { message: 'Success: Deck Created' },
   }),
   failure: error => ({ type: CREATE_DECK_FAILURE, error }),
 };
@@ -115,7 +118,17 @@ export const deleteDeckActions = {
   success: deletedDeck => ({
     type: DELETE_DECK_SUCCESS,
     deletedDeck,
-    flash: { message: "Deck Successfully Deleted" },
+    flash: { message: 'Success: Deck Deleted' },
   }),
   failure: error => ({ type: DELETE_DECK_FAILURE, error }),
+};
+
+export const updateDeckActions = {
+  request: () => ({ type: UPDATE_DECK_REQUEST }),
+  success: updatedDeck => ({
+    type: UPDATE_DECK_SUCCESS,
+    updatedDeck,
+    flash: { message: 'Success: Deck Updated' },
+  }),
+  failure: error => ({ type: UPDATE_DECK_FAILURE, error }),
 };

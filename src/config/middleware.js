@@ -8,9 +8,7 @@ const helmet = require("helmet");
 
 const keys = require("../config/keys");
 
-const isDev = () => {
-  return process.env.NODE_ENV === "development";
-};
+const isDev = process.env.NODE_ENV === "development";
 
 module.exports = app => {
   app.use(helmet());

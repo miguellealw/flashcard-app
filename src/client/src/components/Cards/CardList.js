@@ -20,16 +20,17 @@ const CardList = ({
   slug,
   handleOpenModal,
   handleDeleteCard,
+  isEditing
 }) => {
   // const currentDeck = decks.find(deck => deck.slug === slug);
   // const deckDate = moment(currentDeck.createdAt).format("MMM DD, YYYY");
 
-  return (
-    <DeckListContainer>
+  return <DeckListContainer>
       <Header>
         <Title>
-          {currentDeck.name}{" "}
-          <DeckTimestamp>created on {deckDate}</DeckTimestamp>
+          {currentDeck.name} <DeckTimestamp>
+            created on {deckDate}
+          </DeckTimestamp>
         </Title>
         <ButtonContainers>
           <StudyButton disabled={currentDeck.cards.length === 0}>
@@ -54,8 +55,7 @@ const CardList = ({
           ))
         )}
       </CardContainer>
-    </DeckListContainer>
-  );
+    </DeckListContainer>;
 };
 
 CardList.propTypes = {

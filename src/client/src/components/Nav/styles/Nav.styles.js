@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import { neonGreen } from "../../../global.styles";
+import styled from 'styled-components';
+import { neonGreen } from '../../../global.styles';
+
 export const Navigation = styled.nav`
   display: flex;
   justify-content: flex-end;
@@ -8,27 +9,31 @@ export const Navigation = styled.nav`
   font-size: 0.7em;
   // background: #ebebeb;
   //  background: #202226;
-  & ul {
+  
+  }
+`;
+
+export const NavList = styled.ul`
     display: flex;
     align-items: center;
 
     .selected {
-      color: ${neonGreen};
+      // color: ${neonGreen};
       text-decoration: underline;
     }
-    & a {
+
+    a {
       text-decoration: none;
       color: black;
       text-transform: uppercase;
       font-weight: 700;
-      letter-spacing: 0.15em;
+      // letter-spacing: 0.15em;
       margin-right: 4rem;
       &:hover {
         text-decoration: underline;
       }
-      & li {
+
+      li {
         list-style: none;
       }
-    }
-  }
 `;

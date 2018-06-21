@@ -1,6 +1,6 @@
-import React from "react";
-import Deck from "./Deck";
-import { Link } from "react-router-dom";
+import React from 'react';
+import Deck from './Deck';
+import { Link } from 'react-router-dom';
 import {
   DeckListContainer,
   Title,
@@ -8,47 +8,48 @@ import {
   Header,
   NewDeckButton,
   EmptyDeckMessage,
-} from "./styles/DeckList.styles";
-import PropTypes from "prop-types";
-// import Spinner from "react-spinkit";
-// import SlideFromBottom from "../animations/SlideFromBottom";
-// import { TransitionGroup } from "react-transition-group";
+} from './styles/DeckList.styles';
+import PropTypes from 'prop-types';
 
 const DeckList = ({
   decks,
-  handleOpenModal,
-  match,
+  handleOpenNewDeckModal,
+  handleOpenConfirmationModal,
   handleDeleteDeck,
-  isCreatingDeck,
-  show,
+  handleUpdateDeck,
+  handleChange,
+  match,
+  inputDeckName,
+  isFetched,
+  setDeckToDelete,
 }) => (
   <DeckListContainer>
     <Header>
       <Title>Your Decks</Title>
-      <Link to={`/${match.url}`} onClick={handleOpenModal}>
+      <Link to={`/${match.url}`} onClick={handleOpenNewDeckModal}>
         <NewDeckButton>+ Deck</NewDeckButton>
       </Link>
     </Header>
+
     <DeckContainer>
-      {!decks.length ? (
+      {decks.length === 0 && isFetched ? (
         <EmptyDeckMessage>You Currently Have No Decks</EmptyDeckMessage>
       ) : (
-        decks.map((deck, i) => (
-          // isCreatingDeck ? (
-          //   <li key={i}>
-          //     <Spinner name="circle" />
-          //   </li>
-          // ) :
-
-          <li key={deck._id}>
-            <Link to={`${match.url}/${deck.slug}`}>
+        decks.map(({ _id, name, cards, slug }, i) => (
+          <li key={_id}>
+            <Link to={`${match.url}/${slug}`}>
               <Deck
-                name={deck.name}
-                cardAmount={deck.cards.length}
+                name={name}
+                cardAmount={cards.length}
                 handleDeleteDeck={handleDeleteDeck}
-                deckId={deck._id}
+                handleUpdateDeck={handleUpdateDeck}
+                handleOpenConfirmationModal={handleOpenConfirmationModal}
+                handleChange={handleChange}
+                deckId={_id}
+                deckSlug={slug}
                 match={match}
-                // imgUrl={deck.imgUrl}
+                inputDeckName={inputDeckName}
+                setDeckToDelete={setDeckToDelete}
               />
             </Link>
           </li>
@@ -64,7 +65,6 @@ DeckList.propTypes = {
   match: PropTypes.object.isRequired,
   handleDeleteDeck: PropTypes.func.isRequired,
   isCreatingDeck: PropTypes.bool,
-  show: PropTypes.bool,
 };
 
 export default DeckList;

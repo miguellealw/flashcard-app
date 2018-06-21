@@ -1,4 +1,4 @@
-import styled, { injectGlobal } from "styled-components";
+import { injectGlobal } from "styled-components";
 
 export const neonGreen = "#45e6b5";
 
@@ -13,6 +13,6 @@ export default injectGlobal`
   }
 
   body {
-    // background: #eee;
+    background: whitesmoke;
   }
 `;

@@ -8,7 +8,7 @@ import {
 } from "./styles/Card.styles.js";
 import PropTypes from "prop-types";
 
-const Card = ({ front, back, handleDeleteCard, cardId }) => {
+const Card = ({ front, back, handleDeleteCard, cardId, isEditing }) => {
   return (
     <Fragment>
       <CardContainer>
@@ -16,7 +16,7 @@ const Card = ({ front, back, handleDeleteCard, cardId }) => {
           Delete Card
         </DeleteButton>
         <CardFront>{front}</CardFront>
-        <CardBack>{back}</CardBack>
+        <CardBack>{back}</CardBack>)
       </CardContainer>
     </Fragment>
   );

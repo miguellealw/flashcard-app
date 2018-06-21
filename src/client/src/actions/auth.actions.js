@@ -34,7 +34,7 @@ export const logInUser = (postBody, history) => async dispatch => {
   } catch (error) {
     displayFlash(dispatch, {
       status: "error",
-      message: "Email or Password is Incorrect",
+      message: "Error: Email or Password is Incorrect",
     });
 
     dispatch(logInUserActions.failure(error));

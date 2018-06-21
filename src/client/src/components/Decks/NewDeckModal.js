@@ -1,18 +1,18 @@
-import React from "react";
-import Modal from "react-modal";
-import MdClose from "react-icons/lib/md/close";
-import MdAddCircle from "react-icons/lib/md/add-circle";
-import PropTypes from "prop-types";
+import React from 'react';
+import Modal from 'react-modal';
+import MdClose from 'react-icons/lib/md/close';
+import MdAddCircle from 'react-icons/lib/md/add-circle';
+import PropTypes from 'prop-types';
 import {
   CloseButton,
   AddButton,
   Title,
   Input,
   ModalStyles,
-} from "./styles/NewDeckModal.styles";
+} from './styles/NewDeckModal.styles';
 
 const NewDeckModal = ({
-  showModal,
+  showNewDeckModal,
   handleCloseModal,
   handleAfterOpenModal,
   handleChange,
@@ -21,11 +21,11 @@ const NewDeckModal = ({
   inputDeckName,
 }) => (
   <Modal
-    isOpen={showModal}
+    isOpen={showNewDeckModal}
     onAfterOpen={() => handleAfterOpenModal(this.deckNameInput)}
-    onRequestClose={this.handle}
+    onRequestClose={this.handleCloseModal}
     style={ModalStyles}
-    appElement={document.getElementById("root")}
+    appElement={document.getElementById('root')}
   >
     <Title>New Deck Name</Title>
     <form onSubmit={handleCreateDeck(deckName)}>

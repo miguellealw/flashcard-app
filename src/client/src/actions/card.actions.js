@@ -28,7 +28,7 @@ export const createCard = (deckSlug, front, back) => async (
   if (!front.trim() || !back.trim()) {
     return displayFlash(dispatch, {
       status: "error",
-      message: "Please provide a front and back side to the card",
+      message: "Error: Please provide a front and back side to the card",
     });
   }
   dispatch(createCardActions.request());

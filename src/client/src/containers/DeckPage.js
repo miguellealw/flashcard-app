@@ -1,54 +1,80 @@
-import React, { Component } from "react";
-// import Modal from '../components/Modal'
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 /* Components */
-import DeckList from "../components/Decks/DeckList";
-import NewDeckModal from "../components/Decks/NewDeckModal";
+import DeckList from '../components/Decks/DeckList';
+import NewDeckModal from '../components/Decks/NewDeckModal';
+import Card from '../components/Theme/Card/Card';
+import ConfirmationModal from '../components/Modals/ConfirmationModal';
 
 /* Redux Actions */
-// import { fetchDecks, createDeck } from "../actions";
-import reduxActions from "../actions";
+import reduxActions from '../actions';
 
 class DeckPage extends Component {
   state = {
-    showModal: false,
-    deckName: "",
+    showNewDeckModal: false,
+    showConfirmationModal: false,
+    deckName: '',
+    deckToDelete: '',
   };
 
   async componentDidMount() {
     await this.props.fetchDecks();
   }
 
-  handleOpenModal = () => {
-    this.setState({ showModal: true });
+  setDeckToDelete = deckId => {
+    this.setState({ deckToDelete: deckId });
+  };
+
+  /* 
+  <========================================>
+    Modal Handlers
+  <========================================>
+  */
+  handleOpenModal = modal => () => {
+    this.setState({ [modal]: true });
+  };
+
+  handleCloseModal = modal => () => {
+    this.setState({ [modal]: false, deckToDelete: '' });
   };
 
   handleAfterOpenModal = deckNameInput => {
     deckNameInput.focus();
   };
 
-  handleCloseModal = () => {
-    this.setState({ showModal: false });
-  };
-
+  /* 
+  <========================================>
+    Deck Handlers
+  <========================================>
+  */
   handleCreateDeck = deckName => e => {
     e.preventDefault();
-    this.props.createDeck(deckName);
-    if (deckName.trim() !== "") {
-      this.handleCloseModal();
+    this.props.createDeck(deckName, this.state.isCreatingDeck);
+    if (deckName.trim() !== '') {
+      this.handleCloseModal('showNewDeckModal')();
     }
   };
 
   handleDeleteDeck = deckId => e => {
     // stop deck from going to cards page
     e.preventDefault();
+    // this.handleOpenModal('showConfirmationModal')();
     this.props.deleteDeck(deckId);
-    // this.props.fetchUser();
+    this.handleCloseModal('showConfirmationModal')();
+    this.setState({ deckToDelete: '' });
   };
 
+  handleUpdateDeck = (deckSlug, newName) => {
+    this.props.updateDeck(deckSlug, newName);
+  };
+
+  /* 
+  <========================================>
+    Other Handlers
+  <========================================>
+  */
   handleChange = e => {
-    // console.log(e.target.value);
     this.setState({ deckName: e.target.value });
   };
 
@@ -56,36 +82,53 @@ class DeckPage extends Component {
     return (
       <div>
         <DeckList
-          decks={this.props.decks}
+          decks={this.props.decks.allDecks}
           addDeck={this.addDeck}
           match={this.props.match}
-          handleOpenModal={this.handleOpenModal}
-          handleCloseModal={this.handleCloseModal}
+          inputDeckName={this.state.deckName}
+          handleOpenNewDeckModal={this.handleOpenModal('showNewDeckModal')}
+          handleOpenConfirmationModal={this.handleOpenModal(
+            'showConfirmationModal',
+          )}
           handleDeleteDeck={this.handleDeleteDeck}
+          handleUpdateDeck={this.props.updateDeck}
+          handleChange={this.handleChange}
+          isFetched={this.props.decks.isFetched}
+          setDeckToDelete={this.setDeckToDelete}
         />
+
+        {/* DECK MODALS */}
         <NewDeckModal
-          showModal={this.state.showModal}
-          handleCloseModal={this.handleCloseModal}
+          showNewDeckModal={this.state.showNewDeckModal}
+          handleCloseModal={this.handleCloseModal('showNewDeckModal')}
+          handleAfterOpenModal={this.handleAfterOpenModal}
           handleChange={this.handleChange}
           deckName={this.state.deckName}
           handleCreateDeck={this.handleCreateDeck}
-          handleAfterOpenModal={this.handleAfterOpenModal}
           inputDeckName={this.state.inputDeckName}
+        />
+
+        <ConfirmationModal
+          message="Are You Sure You Want to Delete This Deck?"
+          showConfirmationModal={this.state.showConfirmationModal}
+          handleCloseModal={this.handleCloseModal('showConfirmationModal')}
+          handleDeleteDeck={this.handleDeleteDeck}
+          deckToDelete={this.state.deckToDelete}
         />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ decks, user, flash }) => ({
+const mapState = ({ decks, user }) => ({
   decks,
   user,
-  flash,
 });
 
-export default connect(mapStateToProps, {
+export default connect(mapState, {
   fetchDecks: reduxActions.fetchDecks,
   createDeck: reduxActions.createDeck,
   deleteDeck: reduxActions.deleteDeck,
   fetchUser: reduxActions.fetchUser,
+  updateDeck: reduxActions.updateDeck,
 })(DeckPage);
