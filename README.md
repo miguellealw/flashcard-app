@@ -6,5 +6,5 @@
 
 ### Setup Client Side
 - [x] setup client with react
-  - [ ] design the app
-  - [ ] implement design
+  - [x] design the app
+  - [x] implement design
